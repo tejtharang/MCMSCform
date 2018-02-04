@@ -1,0 +1,23 @@
+{
+  "name": "mcmsc",
+  "version": "1.0.0",
+  "description": "This a form being developed for MCMSC, ASU",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tejtharang/MCMSCform.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tejtharang/MCMSCform/issues"
+  },
+  "homepage": "https://github.com/tejtharang/MCMSCform#readme",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}
