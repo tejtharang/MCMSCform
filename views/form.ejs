@@ -322,7 +322,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<label class="control-label" for="coursesAddYes">
+							<label class="control-label" for="coursesAdd">
 								Yes
 							</label>
 						</div>
@@ -330,7 +330,7 @@
 							<input type="radio" id="coursesAddYes" name="coursesAdd" required>
 						</div>
 						<div class="col-md-1">
-							<label class="control-label" for="coursesAddNo">
+							<label class="control-label" for="coursesAdd">
 								No
 							</label>
 
@@ -517,7 +517,8 @@
 						<div class="row">
 							<div class="form-group pad">
 								<div class="col-md-4">
-									<label class="control-label" for="metChair">
+									<label class="control-label" for="reasonNotMetChair">
+										Please specify reason for not having met the chair
 										<sup class="star">*</sup>
 									</label>
 								</div>
@@ -528,6 +529,281 @@
 						</div>
 					</div>
 
+				</div>
+			</div> <!-- this div is for panel body -->
+
+		</div>
+		<div class="panel panel-info">
+			<div class="panel-heading">Section B | Student Progress</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-4">
+							<label class="control-label" for="prospectusDefense">
+								Have you completed Prospectus Defense?
+								<sup class="star">*</sup>
+							</label>
+
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="prospectusDefenseCompleted">
+								Yes
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="coursesAddYes" name="prospectusDefenseCompleted" value="1" required>
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="prospectusDefenseCompleted">
+								No
+							</label>
+
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="coursesAddNo" name="prospectusDefenseCompleted" value="0">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group pad">
+						<fieldset>
+							<div class="col-md-3">
+								<label class="control-label" for="prospectusDefenseAnticipatedDate">
+									Anticipated date for Prospectus Defense
+									<sup class="star">*</sup>
+								</label>
+							</div>
+							<div class="col-md-1">
+								<label class="control-label" for="prospectusAnticipatedDateSession">
+									Semester
+								</label>
+							</div>
+							<div class="col-md-2">
+								<select class="form-control" id="prospectusAnticipatedDateSession" name="prospectusAnticipatedDateSession">
+									<option value="session" disabled selected="selected">--session--</option>
+									<option value="Spring">Spring</option>
+									<option value="Summer">Summer</option>
+									<option value="Fall">Fall</option>
+								</select>
+							</div>
+							<div class="col-md-1">
+								<label class="control-label" for="prospectusAnticipatedDateYear" name="prospectusAnticipatedDateYear">
+									Year
+								</label>
+								
+							</div>
+							<div class="col-md-2">
+								<select class="form-control" id="prospectusAnticipatedDateYear" name="prospectusAnticipatedDateYear">
+									<option value="year" disabled selected="selected"> Year </option>
+									<%for(var i=2018;i<=2030;i++){%>
+									<option value=<%=i%>><%=i%></option>
+									<%}%>
+								</select>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-4">
+							<label class="control-label" for="mtbi">
+								Have you participated in MTBI?
+								<sup class="star">*</sup>
+							</label>
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="mtbiParticipation">
+								Yes
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="mtbiParticipationYes" name="mtbiParticipation" required value="1">
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="mtbiParticipation">
+								No
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="mtbiParticipationNo" name="mtbiParticipation" value="0">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-md-4">
+							<label class="control-label" for="mtbiParticipationYear">
+								Year of MTBI participation
+							</label>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control" id="prospectusAnticipatedDateYear" name="prospectusAnticipatedDateYear">
+								<option value="year" disabled selected="selected"> Year </option>
+								<%for(var i=2000;i<=2030;i++){%>
+								<option value=<%=i%>><%=i%></option>
+								<%}%>
+							</select>
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="mtbiParticipationRole">
+								Role
+							</label>
+						</div>
+						<div class="col-md-2">
+							<select class="form-control" id="mtbiParticipationRole" name="mtbiParticipationRole">
+									<option value="role" disabled selected="selected">Role</option>
+									<option value="Undergraduate Participant">Undergraduate Participant</option>
+									<option value="Graduate Participant">Graduate Participant</option>
+									<option value="Mentor">Mentor/Tutor</option>
+								</select>
+						</div>
+					</div>
+					
+				</div>
+				<div class="row">
+					<div class="form-group pad">
+						<fieldset>
+							<div class="col-md-3">
+								<label class="control-label" for="mtbiAnticipated">
+									Anticipated date for MTBI participation
+									<sup class="star">*</sup>
+								</label>
+							</div>
+							<div class="col-md-1">
+								<label class="control-label" for="mtbiAnticipatedDateSession">
+									Semester
+								</label>
+							</div>
+							<div class="col-md-2">
+								<select class="form-control" id="prospectusAnticipatedDateSession" name="prospectusAnticipatedDateSession">
+									<option value="session" disabled selected="selected">--session--</option>
+									<option value="Spring">Spring</option>
+									<option value="Summer">Summer</option>
+									<option value="Fall">Fall</option>
+								</select>
+							</div>
+							<div class="col-md-1">
+								<label class="control-label" for="prospectusAnticipatedDateYear" name="prospectusAnticipatedDateYear">
+									Year
+								</label>
+								
+							</div>
+							<div class="col-md-2">
+								<select class="form-control" id="prospectusAnticipatedDateYear" name="prospectusAnticipatedDateYear">
+									<option value="year" disabled selected="selected"> Year </option>
+									<%for(var i=2018;i<=2030;i++){%>
+									<option value=<%=i%>><%=i%></option>
+									<%}%>
+								</select>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-4">
+							<label class="control-label" for="publications">
+								Do you want to add publications for the current year?
+							</label>
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="publicationsExist">
+								Yes
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="publicationsExistYes" name="publicationsExist" value="1" required> 
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="publicationsExist">
+								No
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="publicationsExistNo" name="publicationsExist" value="0"> 
+						</div>
+
+					</div>
+
+				</div>	
+				<table class="table table-hover pad" id="publicationsAddTable">
+					<tr>
+						<th class="col-md-2">Publication</th>
+						<th class="col-md-2">Journal</th>
+						<th class="col-md-2">Status</th>
+						<th class="col-md-3">URL</th>
+						<th class="col-md-2">DOI</th>
+						<th class="col-md-1">Action</th>
+					</tr>
+
+				</table>
+				<div class="row" id="addCourseRowDiv">
+					<div class="form-group pad">
+						<div class="col-md-2">
+							<label class="control-label" for="publicationName">
+								Publication Name
+								<sup class="star">*</sup>
+							</label>
+						</div>
+						<div class="col-md-2">
+							<input type="text" id="publicationName" class="form-control" name="publicationName">
+						</div>
+						<div class="col-md-2">
+							<label class="control-label" for="journalName">
+								Journal Name
+							</label>
+						</div>
+						<div class="col-md-2">
+							<input type="text" id="journalName" class="form-control" name="journalName">
+						</div>
+						<div class="col-md-2">
+							<label class="control-label" for="publicationStatus">
+								Status
+							</label>
+						</div>
+						<div class="col-md-2">
+							<select id="publicationStatus" class="form-control" name="publicationStatus">
+								<option value="disabled" disabled selected="selected">--status--</option>
+								<option value="Submitted">Submitted</option>
+								<option value="Accepted">Accepted</option>
+								<option value="Published">Published</option>
+								<option value="ArXiv">ArXiv</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row" id="publicationUrlDiv">
+					<div class="form-group pad">
+						<div class="col-md-2">
+							<label class="control-label" for="publicationUrl">
+								Publication URL
+							</label>						
+						</div>
+						<div class="col-md-4">
+							<input class="form-control" type="url" id="publicationUrl" name="publicationUrl">
+						</div>
+					</div>
+				</div>
+				<div class="row" id="publicationDoiDiv">
+					<div class="form-group pad">
+						<div class="col-md-2">
+							<label class="control-label" for="publicationDoi">
+								Publication DOI
+							</label>						
+						</div>
+						<div class="col-md-4">
+							<input class="form-control" type="url" id="publicationDoi" name="publicationDoi">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+						<div class="form-group pad">
+							<div class="col-md-2">
+							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
+								<button id="addCourse" class="btn btn-success" onclick="addCourse()"> Add Course </button>
+							</div>
+							
+						</div>
 				</div>
 			</div> <!-- this div is for panel body -->
 
