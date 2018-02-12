@@ -25,20 +25,44 @@
 		padding-bottom: 10px;
 	}
 </style>
-<script>
-	function addCourse(){
+<script type="text/javascript">
+	function addNewCourse(){
 		$.ajax({
 			url : "http://localhost:3000",
 			type : 'GET',
 			success : function() {
 				console.log("reached here");
 
+				var error = false;
 				var data1 = document.getElementById("courseName").value;
 				var data2 = document.getElementById("courseGrade").value;
+				if(data1 === "" || data2 === ""){
+					console.log("1");
+					error = true;
+				}
+				if(error){
+					console.log("2");
+					if(data1==="" && data2==="")
+					{
+						console.log(3);
+						alert("Please fill the course details correctly!");
+					}
+					else if(data1===""){
+						console.log(4);
+						alert("Please fill the course name correctly!");
+					}
+					else if(data2===""){
+						console.log(5);
+						alert("Please fill the course grade correctly!");
+					}
 
-				$('#courseAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + "<button class='removeCourse btn btn-danger' onclick='removeCourse()'>delete</button>" +"</td></tr>");
+				}
+				else{
+					console.log(6);
+				$('#courseAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + "<button type='button' class='removeCourse btn btn-danger' onclick='removeCourse()'>delete</button>" +"</td></tr>");
 				$("#courseName").val("");
-				$("#courseGrade").val("");        	    
+				$("#courseGrade").val("");
+				}        	    
 			},
 			error : function() {
 				console.log('error');
@@ -73,11 +97,17 @@
 				var data1 = document.getElementById("memberPosition").value;
 				var data2 = document.getElementById("memberName").value;
 				var data3 = document.getElementById("memberEmail").value;
+				var error = false;
+				if(data1 === "initial" || data2 ==="" || data3 ===""){
+					alert("Please fill the Advisory Committee member details correctly");
+					error=true;
+				}
 
-				$('#memberAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" +"<button class='removeMember btn btn-danger' onclick='removeMember()'>Delete</button>" +"</td></tr>");
+				if(!error){ 
+				$('#memberAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" +"<button type='button' class='removeMember btn btn-danger' onclick='removeMember()'>Delete</button>" +"</td></tr>");
 				$("#memberName").val("");
 				$("#memberPosition").val("");
-				$("#memberEmail").val("");        	    
+				$("#memberEmail").val(""); }        	    
 			},
 			error : function() {
 				console.log('error');
@@ -102,8 +132,289 @@
 
 	} 
 </script>
+<script>
+	function addPublication(){
+		$.ajax({
+			url : "http://localhost:3000",
+			type : 'GET',
+			success : function(){
+				console.log("add publication function reached");
+				var data1 = document.getElementById("publicationName").value;
+				var data2 = document.getElementById("journalName").value;
+				var data3 = document.getElementById("publicationStatus").value;
+				var data4 = document.getElementById("publicationUrl").value;
+				var data5 = document.getElementById("publicationDoi").value;
+				$('#publicationsAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 +"</td><td>" + data4 + "</td><td>" + data5+ "</td><td>" +"<button type='button' class='removePublication btn btn-danger' onclick='removePublication()'>Delete</button>" +"</td></tr>");
+
+				$('#publicationName').val("");
+				$('#journalName').val("");
+				$('#publicationStatus').val("");
+				$('#publicationUrl').val("");
+				$('#publicationDoi').val("");
+			}
+		})
+	}
+</script>
+<script>
+	function removePublication(){
+		$.ajax({
+			url : "http://localhost:3000",
+			type : 'GET',
+			success:function(){
+				$('.removePublication').click(function(){console.log($(this).parent().parent().remove())});
+			},
+			error : function(){
+				console.log('error');
+			}
+		})
+	}
+</script>
+<script>
+	function addPresentation(){
+		$.ajax({
+			url : "http://localhost:3000",
+			type : 'GET',
+			success : function(){
+				console.log("Add presentation function reached");
+				var data1 = document.getElementById("presentationType").value;
+				var data2 = document.getElementById("presentationTitle").value;
+				var data3 = document.getElementById("presentationForum").value;
+				
+				if(document.getElementById("otherPresentationType").value != ""){
+					data1 = document.getElementById("otherPresentationType").value;
+					console.log(data1);
+				}
+				$('#presentationsAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" +"<button type='button' class='removePresentation btn btn-danger' onclick='removePresentation()'>Delete</button>" +"</td></tr>");
+				$('#presentationType').val("");
+				$('#presentationTitle').val("");
+				$('#presentationForum').val("");
+				$('#otherPresentationType').val("");
+			}
+		})
+	}
+</script>
+<script>
+	function removePresentation(){
+		$.ajax({
+			url : "http://localhost:3000",
+			type:'GET',
+			success : function(){
+				console.log("Remove Presentation function reached");
+				$('.removePresentation').click(function(){console.log($(this).parent().parent().remove())});
+			},
+			error:function(){
+				console.log('error');
+			}
+		})
+	}
+</script>
+<script>
+	function displayOtherPresentationType(){
+		$.ajax({
+			url : "http://localhost:3000",
+			type : 'GET',
+			success : function(){
+				console.log("enters here");
+				if(document.getElementById("presentationType").value==="Other"){
+					$('#otherPresentationTypeDiv').show();	
+				}
+				
+			},
+			error:function(){
+				console.log("error");
+			}
+		})
+	}
+</script>
+<script>
+	function addConference(){
+		$.ajax({
+			url :'http://localhost:3000',
+			type : 'GET',
+			success : function(){
+				console.log("Add conference function reached");
+				var data1 = document.getElementById("conferenceName").value;
+				
+				
+				$('#conferencesAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + "<button type='button' class='removeConference btn btn-danger' onclick='removeConference()'>Delete</button>" +"</td></tr>");
+
+				$('#conferenceName').val("");
+			},
+			error:function(){
+				console.log("error");
+			}
+		})
+	}
+</script>
+<script>
+	function removeConference(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success : function(){
+				console.log("remove conference enters here");
+				$('.removeConference').click(function(){console.log($(this).parent().parent().remove())});
+			},
+			error:function(){
+				console.log("error");
+			}
+		})
+	}
+</script>
+<script>
+	function addAward(){
+		$.ajax({
+			url :'http://localhost:3000',
+			type : 'GET',
+			success : function(){
+				console.log("Add conference function reached");
+				var data1 = document.getElementById("awardName").value;
+				
+				
+				$('#awardsAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + "<button type='button' class='removeConference btn btn-danger' onclick='removeConference()'>Delete</button>" +"</td></tr>");
+
+				$('#awardName').val("");
+			},
+			error:function(){
+				console.log("error");
+			}
+		})	
+	}
+</script>
+<script>
+	function removeAward(){
+		$.ajax({
+			url:"http://localhost:3000",
+			type:'GET',
+			success:function(){
+				console.log("remove award enters here");
+				$(".removeAward").click(function(){console.log($(this).parent().parent().remove())});
+			},
+			error:function(){
+				console.log("error");
+			}
+		})
+	}
+</script>
+<script>
+	function displayEmployment(){
+		$.ajax({
+			url:"http://localhost:3000",
+			type:'GET',
+			success:function(){
+				$('#sectionADiv').show();
+				$('#sectionBDiv').show();
+				$('#sectionCDiv').show();
+				$('#employmentDiv').show();
+			},
+			error:function(){
+				console.log("error");
+			}
+
+		})
+	}
+</script>
+<script>
+	function displaySectionABC(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#sectionADiv').show();
+				$('#sectionBDiv').show();
+				$('#sectionCDiv').show();
+				$('#employmentDiv').hide();
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})
+	}
+</script>
+<script>
+
+	$(document).ready(function(){
+		var curtime = new Date();
+		var month = curtime.getMonth();
+		var year = curtime.getFullYear();
+		if(month>=8){
+			$('#academicYearFrom').val(year);
+			$('#academicYearTo').val(year+1);
+		}
+		else{
+			$('#academicYearFrom').val(year-1);
+			$('#academicYearTo').val(year);	
+		}
+	})
+</script>
+<script>
+	function displayAddNewCourseDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addCourseRowDiv').show();
+				$('#noCourseReasonDiv').hide();
+				document.getElementById("reasonCourse").required=false;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})
+	}
+</script>
+<script>
+	function displayNoCourseReasonDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addCourseRowDiv').hide();
+				$('#noCourseReasonDiv').show();
+				document.getElementById("reasonCourse").required=true;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})
+	}
+</script>
+<script>
+	function displayMembersAddDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addMemberRowDiv').show();
+				$('#noAdvisoryCommitteeReasonDiv').hide();
+				document.getElementById("reasonAdvisoryCommittee").required=false;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
+<script>
+	function displayNoAdvisoryCommitteeReasonDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addMemberRowDiv').hide();
+				$('#noAdvisoryCommitteeReasonDiv').show();
+				document.getElementById("reasonAdvisoryCommittee").required=true;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
+
 </head>
 <body>
+	<form method="POST" action="#">
 	<div class="container">
 		<div class="panel panel-info">
 			<div class="panel-heading">Introductory Section</div>
@@ -141,7 +452,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="mastersInPassingYes" name="mastersInPassing" required>
+							<input type="radio" id="mastersInPassingYes" name="mastersInPassing" value="1" required>
 						</div>
 						<div class="col-md-1">
 							<label class="control-label" for="mastersInPassingNo">
@@ -150,7 +461,7 @@
 
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="mastersInPassingNo" name="mastersInPassing">
+							<input type="radio" id="mastersInPassingNo" name="mastersInPassing" value="0">
 						</div>
 					</div>
 				</div>
@@ -168,7 +479,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="graduationYes" name="graduation" required>
+							<input type="radio" id="graduationYes" name="graduation" value="1" onclick="displayEmployment()" required>
 						</div>
 						<div class="col-md-1">
 							<label class="control-label" id="graduationNo" for="graduation">
@@ -177,14 +488,61 @@
 
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="graduationNo" name="graduation">
+							<input type="radio" id="graduationNo" name="graduation" value="0" onclick="displaySectionABC()">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<!-- Employment survey div starts -->
+		<div class="panel panel-info" id="employmentDiv" style="display:none;">
+			<div class="panel-heading">Employment Survey</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-6">
+							<label class="control-label" for="emailExtra">
+								Please enter an email where you can be contacted after you leave ASU
+								<sup class="star">*</sup>
+							</label>
+						</div>
+						<div class="col-md-3">
+							<input class="form-control" id="emailExtra" type="email" name="emailExtra">
+						</div>
+					</div>
+
+				</div>
+				<div class="row">
+						<div class="form-group pad">
+							<div class="col-md-5">
+								<label class="control-label" for="acceptance">
+									Do you have employment after graduation?
+								</label>	
+							</div>
+							<div class="col-md-1">
+								<label class="control-label" for="employment">
+									Yes
+								</label>
+							</div>
+							<div class="col-md-1">
+								<input type="radio" id="employment" name="employment">
+							</div>
+							<div class="col-md-1">
+								<label class="control-label" for="employment">
+									No
+								</label>
+
+							</div>
+							<div class="col-md-1">
+								<input type="radio" id="employmentNo" name="employment">
+							</div>
+						</div>
+					</div>
+
+			</div>	
+		</div>
 		<!-- Section A starts -->
-		<div class="panel panel-info">
+		<div class="panel panel-info" id="sectionADiv" style="display:none;">
 			<div class="panel-heading">Section A | Program of Study - Status</div>
 			<div class="panel-body">
 				<div class="row">
@@ -198,13 +556,13 @@
 						<label class="control-label" for="academicYearFrom">Fall</label>
 					</div>
 					<div class="col-md-1" > 
-						<input class="form-control" type="text" id="academicYearFrom" name="academicYearFrom">
+						<input class="form-control" type="text" id="academicYearFrom" name="academicYearFrom" required disabled>
 					</div>
 					<div class="col-md-2"> 
 						<label class="control-label" for="academicYearTo">Spring/Summer</label>
 					</div>
 					<div class="col-md-1"> 
-						<input class="form-control" type="text" id="academicYearTo" name="academicYearTo">
+						<input class="form-control" type="text" id="academicYearTo" name="academicYearTo" required disabled>
 					</div>
 
 				</div>
@@ -217,7 +575,7 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control" type="text" id="firstName" name="firstName">
+							<input class="form-control" type="text" id="firstName" name="firstName" required>
 						</div>
 						<div class="col-md-2">
 							<label class="control-label" for="lastName">
@@ -226,7 +584,7 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control" type="text" id="lastName" name="lastName">
+							<input class="form-control" type="text" id="lastName" name="lastName" required>
 						</div>
 					</div>
 				</div>
@@ -239,7 +597,7 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control" type="text" id="idNumber" name="idNumber">
+							<input class="form-control" type="text" id="idNumber" name="idNumber" required>
 						</div>
 						<div class="col-md-2">
 							<label class="control-label" for="asurite">
@@ -248,7 +606,7 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control" type="text" id="asurite" name="asurite">
+							<input class="form-control" type="text" id="asurite" name="asurite" required>
 						</div>
 					</div>
 				</div>
@@ -262,7 +620,7 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control" type="month" id="programStartDate" name="ProgramStartDate">
+							<input class="form-control" type="month" id="programStartDate" name="programStartDate" required>
 						</div>
 						<div class="col-md-2">
 							<label class="control-label" for="asurite">
@@ -271,7 +629,7 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<select id="currentSemester" class="form-control" name="currentSemester">
+							<select id="currentSemester" class="form-control" name="currentSemester" required>
 								<option value="initial" disabled selected="selected">current semester</option>
 								<%for(var i=1;i<=20;i++){%>
 								<option value=<%=i%>><%=i%></option>
@@ -289,13 +647,13 @@
 							</label>	
 						</div>
 						<div class="col-md-2">
-							<input type="text" id="gpa" name="gpa" class="form-control">
+							<input type="text" id="gpa" name="gpa" class="form-control" required>
 						</div>
 					</div>
 				</div>
 
 				<hr>
-				<font size="2">
+				<!--<font size="2">
 					<i><u>Courses taken previously</u></i>
 				</font>
 				<table class="table table-hover">
@@ -304,15 +662,7 @@
 						<th>Course</th>
 						<th>Grade</th>
 					</tr>
-					<% Courses = [{name:"MAT271",grade:"A+"}]; %>
-					<% Courses.forEach(function(course){ %>
-					<tr>
-						<th><%= Courses.indexOf(course) + 1 %></th>
-						<th><%= course.name %></th>
-						<th><%= course.grade %></th>
-					</tr>
-					<%});%>
-				</table>
+				</table> -->
 				<div class="row">
 					<div class="form-group pad">
 						<div class="col-md-4">
@@ -327,7 +677,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="coursesAddYes" name="coursesAdd" required>
+							<input type="radio" id="coursesAddYes" name="coursesAdd" onclick="displayAddNewCourseDiv()"required>
 						</div>
 						<div class="col-md-1">
 							<label class="control-label" for="coursesAdd">
@@ -336,7 +686,7 @@
 
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="coursesAddNo" name="coursesAdd">
+							<input type="radio" id="coursesAddNo" onclick="displayNoCourseReasonDiv()" name="coursesAdd">
 						</div>
 					</div>
 				</div>
@@ -348,7 +698,7 @@
 					</tr>
 
 				</table>
-				<div class="row" id="addCourseRowDiv">
+				<div class="row" id="addCourseRowDiv" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<label class="control-label" for="coursesName">
@@ -370,14 +720,14 @@
 						<div class="col-md-2">
 						</div>
 						<div class="col-md-2">
-							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
-							<button id="addCourse" class="btn btn-success" onclick="addCourse()"> Add Course </button>
+							
+							<button type="button" id="addCourseButton" class="btn btn-success" onclick="addNewCourse()"> Add Course </button>
 						</div>
 
 					</div>
 
 				</div>
-				<div id="noCourseReasonDiv">
+				<div id="noCourseReasonDiv" style="display:none;">
 					<div class="row">
 						<div class="form-group pad">
 							<div class="col-md-5">
@@ -389,7 +739,7 @@
 						</div>
 					</div>
 					<div class="form-group pad">
-						<textarea class="form-control" name="reasonCourse" rows="3" cols="100" placeholder="Enter reason here"></textarea>
+						<textarea class="form-control" id="reasonCourse" name="reasonCourse" rows="3" cols="100" placeholder="Enter reason here"></textarea>
 					</div>
 
 				</div>
@@ -407,7 +757,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="membersAddYes" name="membersAdd" required>
+							<input type="radio" id="membersAddYes" name="membersAdd" onclick="displayMembersAddDiv()" required>
 						</div>
 						<div class="col-md-1">
 							<label class="control-label" for="membersAdd">
@@ -416,7 +766,7 @@
 
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="membersAddNo" name="membersAdd">
+							<input type="radio" id="membersAddNo" name="membersAdd" onclick="displayNoAdvisoryCommitteeReasonDiv()">
 						</div>
 					</div>
 				</div>
@@ -428,7 +778,7 @@
 					</tr>
 
 				</table>
-				<div class="row" id="addMemberRowDiv">
+				<div class="row" id="addMemberRowDiv" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-1">
 							<label class="control-label" for="memberPosition">
@@ -437,8 +787,8 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<select id="memberPosition" class="form-control" name="memberPosition" required>
-								<option value="initial" disabled selected="selected">-- position --</option>
+							<select id="memberPosition" class="form-control" name="memberPosition" >
+								<option value="initial" disabled selected="selected"></option>
 								<option value="CHAIR">CHAIR</option>
 								<option value="CO_CHAIR">CO-CHAIR</option>
 								<option value="MEMBER">MEMBER</option>
@@ -463,25 +813,25 @@
 						</div>
 						<div class="col-md-1">
 							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
-							<button id="addCourse" class="btn btn-success" onclick="addMember()"> Add Member </button>
+							<button id="addCourse" class="btn btn-success" onclick="addMember()" type="button"> Add Member </button>
 						</div>
 
 					</div>
 
 				</div>
-				<div id="noAdvisoryCommitteeReasonDiv">
+				<div id="noAdvisoryCommitteeReasonDiv" style="display:none;">
 					<div class="row">
 						<div class="form-group pad">
 							<div class="col-md-5">
 								<label class="control-label" for="reasonAdvisoryCommittee">
-									Please specify reason for not taking courses this year
+									Please specify reason for not having an AdvisoryCommittee
 									<sup class="star">*</sup>
 								</label>
 							</div>
 						</div>
 					</div>
 					<div class="form-group pad">
-						<textarea class="form-control" name="reasonAdvisoryCommittee" rows="3" cols="100" placeholder="Enter reason here"></textarea>
+						<textarea class="form-control" id="reasonAdvisoryCommittee" name="reasonAdvisoryCommittee" rows="3" cols="100" placeholder="Enter reason here"></textarea>
 					</div>
 
 				</div>
@@ -531,9 +881,9 @@
 
 				</div>
 			</div> <!-- this div is for panel body -->
-
+			<!-- Section B starts -->
 		</div>
-		<div class="panel panel-info">
+		<div class="panel panel-info" id="sectionBDiv" style="display:none;">
 			<div class="panel-heading">Section B | Student Progress</div>
 			<div class="panel-body">
 				<div class="row">
@@ -651,11 +1001,11 @@
 						</div>
 						<div class="col-md-2">
 							<select class="form-control" id="mtbiParticipationRole" name="mtbiParticipationRole">
-									<option value="role" disabled selected="selected">Role</option>
-									<option value="Undergraduate Participant">Undergraduate Participant</option>
-									<option value="Graduate Participant">Graduate Participant</option>
-									<option value="Mentor">Mentor/Tutor</option>
-								</select>
+								<option value="role" disabled selected="selected">Role</option>
+								<option value="Undergraduate Participant">Undergraduate Participant</option>
+								<option value="Graduate Participant">Graduate Participant</option>
+								<option value="Mentor">Mentor/Tutor</option>
+							</select>
 						</div>
 					</div>
 					
@@ -737,7 +1087,7 @@
 					</tr>
 
 				</table>
-				<div class="row" id="addCourseRowDiv">
+				<div class="row" id="addPublicationRowDiv">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<label class="control-label" for="publicationName">
@@ -797,19 +1147,272 @@
 					</div>
 				</div>
 				<div class="row">
-						<div class="form-group pad">
-							<div class="col-md-2">
+					<div class="form-group pad">
+						<div class="col-md-2">
 							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
-								<button id="addCourse" class="btn btn-success" onclick="addCourse()"> Add Course </button>
-							</div>
-							
+							<button id="addPublication" class="btn btn-success" onclick="addPublication()" type="button"> Add Publication </button>
 						</div>
+
+					</div>
+				</div>
+
+				<!-- Presentations begins here -->
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-4">
+							<label class="control-label" for="presentations">
+								Do you want to add presentations for the current year?
+							</label>
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="presentationsExist">
+								Yes
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="presentationsExistYes" name="presentationsExist" value="1" required> 
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="presentationsExist">
+								No
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="presentationsExistNo" name="presentationsExist" value="0"> 
+						</div>
+
+					</div>
+
+				</div>	
+				<table class="table table-hover pad" id="presentationsAddTable">
+					<tr>
+						<th class="col-md-3">Presentation</th>
+						<th class="col-md-3">Title</th>
+						<th class="col-md-3">Forum</th>
+					</tr>
+
+				</table>
+				<div class="row" id="addPresentationRowDiv">
+					<div class="form-group pad">
+						<div class="col-md-2">
+							<label class="control-label" for="presentationType">
+								Presenation Type
+								<sup class="star">*</sup>
+							</label>
+						</div>
+						<div class="col-md-2">
+							<select id="presentationType" class="form-control" name="presentationType" onchange="displayOtherPresentationType()">
+								<option value="disabled" disabled selected="selected">--Type--</option>
+								<option value="Conference Talk">Conference Talk</option>
+								<option value="Poster">Poster</option>
+								<option value="Seminar">Seminar</option>
+								<option value="Other" >Other</option>
+							</select>	
+						</div>
+						<div class="col-md-2">
+							<label class="control-label" for="presentationTitle">
+								Title
+							</label>
+						</div>
+						<div class="col-md-2">
+							<input type="text" id="presentationTitle" class="form-control" name="presentationTitle">
+						</div>
+						<div class="col-md-2">
+							<label class="control-label" for="presenationForum">
+								Forum
+							</label>
+						</div>
+						<div class="col-md-2">
+							<input type="text" id="presentationForum" class="form-control" name="presentationForum">
+						</div>
+					</div>
+					
+				</div>
+				<div class="row" id="otherPresentationTypeDiv" style="display:none;">
+					<div class="form-group pad">
+						<div class="col-md-4">
+							<label class="control-label" for="otherPresentationType">
+								Please specify other presentation type
+							</label>
+						</div>
+						<div class="col-md-5">
+							<input type="text" id="otherPresentationType" class="form-control" name="otherPresentationType">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-2">
+							<button id="addPresentation" class="btn btn-success" onclick="addPresentation()" type="button"> Add Presentation </button>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-4">
+							<label class="control-label" for="conferences">
+								Do you want to add Conferences for the current year?
+							</label>
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="conferencesExist">
+								Yes
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="conferencesExistYes" name="conferencesExist" value="1" required> 
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="conferencesExist">
+								No
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="conferencesExistNo" name="conferencesExist" value="0"> 
+						</div>
+
+					</div>
+
+				</div>	
+				<table class="table table-hover pad" id="conferencesAddTable">
+					<tr>
+						<th class="col-md-3">Conference Name</th>
+						<th class="col-md-2">Action</th>
+					</tr>
+
+				</table>
+				<div class="row" id="addConferenceRowDiv">
+					<div class="form-group pad">
+						<div class="col-md-2">
+							<label class="control-label" for="conferenceName">
+								Conference Name
+								<sup class="star">*</sup>
+							</label>
+						</div>
+						<div class="col-md-2">
+							<input type="text" id="conferenceName" class="form-control" name="conferenceName">
+						</div>
+					</div>
+					
+				</div>
+				
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-2">
+							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
+							<button id="addConference" class="btn btn-success" onclick="addConference()" type="button"> Add Presentation </button>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-4">
+							<label class="control-label" for="awards">
+								Do you want to add Awards for the current year?
+							</label>
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="awardsExist">
+								Yes
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="awardsExistYes" name="awardsExist" value="1" required> 
+						</div>
+						<div class="col-md-1">
+							<label class="control-label" for="awardsExist">
+								No
+							</label>
+						</div>
+						<div class="col-md-1">
+							<input type="radio" id="awardsExistNo" name="awardsExist" value="0"> 
+						</div>
+
+					</div>
+
+				</div>	
+				<table class="table table-hover pad" id="awardsAddTable">
+					<tr>
+						<th class="col-md-3">Award</th>
+						<th class="col-md-2">Action</th>
+					</tr>
+
+				</table>
+				<div class="row" id="addAwardRowDiv">
+					<div class="form-group pad">
+						<div class="col-md-2">
+							<label class="control-label" for="awardName">
+								Award
+								<sup class="star">*</sup>
+							</label>
+						</div>
+						<div class="col-md-4">
+							<input type="text" id="awardName" class="form-control" name="awardName">
+						</div>
+
+					</div>
+					
+				</div>
+				
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-2">
+							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
+							<button id="addAward" class="btn btn-success" onclick="addAward()" type="button"> Add Award </button>
+						</div>
+
+					</div>
 				</div>
 			</div> <!-- this div is for panel body -->
 
+
+		</div>
+		<div class="panel panel-info" id="sectionCDiv" style="display:none;">
+			<div class="panel-heading">Section C | Program of Study - Status</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-6">
+							<label class="control-label" for="extraInfo">
+								Please enter any other information you wish to add to this form
+								<sup class="star">*</sup>
+							</label>
+						</div>
+					s</div>
+				</div>
+				<div class="form-group pad">
+					<textarea class="form-control" id="extraInfo" name="extraInfo" rows="3" cols="100" placeholder="Enter reason here"></textarea>
+				</div>
+				<div class="row">
+					<div class="col-md-1">
+						<input type="checkbox" id="acceptance" name="acceptance" value="1" required>
+					</div>
+					<div class="col-md-5">
+						<label class="control-label" for="acceptance">
+							I certify that all the information is true and complete to the best of my knowledge
+						</label>	
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-2">
+							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
+							<button id="addAward" class="btn btn-success" type="submit"> Submit form </button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
 		</div>
 	</div>
-	
+</div>
+</form>
 
 </body>
 </html>
