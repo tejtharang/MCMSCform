@@ -133,7 +133,7 @@
 	} 
 </script>
 <script>
-	function addPublication(){
+	function addNewPublication(){
 		$.ajax({
 			url : "http://localhost:3000",
 			type : 'GET',
@@ -144,6 +144,23 @@
 				var data3 = document.getElementById("publicationStatus").value;
 				var data4 = document.getElementById("publicationUrl").value;
 				var data5 = document.getElementById("publicationDoi").value;
+				var error=false;
+				if(data1 === "" || data2 ==="" || data3 ===""){
+					error = true;
+					alert("Please fill in the publication details correctly!");
+				}
+				else if(data3==="Published"&&data4===""){
+					error = true;
+					alert("Please fill in the publication URL correctly!");
+				}
+				else if(data3==="ArXiv" && data5===""){
+					error = true;
+					alert("Please fill in the publication DOI correctly!");
+				}
+				else{
+					error = false;
+				}
+				if(!error){
 				$('#publicationsAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 +"</td><td>" + data4 + "</td><td>" + data5+ "</td><td>" +"<button type='button' class='removePublication btn btn-danger' onclick='removePublication()'>Delete</button>" +"</td></tr>");
 
 				$('#publicationName').val("");
@@ -151,6 +168,7 @@
 				$('#publicationStatus').val("");
 				$('#publicationUrl').val("");
 				$('#publicationDoi').val("");
+				}
 			}
 		})
 	}
@@ -170,7 +188,7 @@
 	}
 </script>
 <script>
-	function addPresentation(){
+	function addNewPresentation(){
 		$.ajax({
 			url : "http://localhost:3000",
 			type : 'GET',
@@ -179,16 +197,31 @@
 				var data1 = document.getElementById("presentationType").value;
 				var data2 = document.getElementById("presentationTitle").value;
 				var data3 = document.getElementById("presentationForum").value;
+				var data4 = document.getElementById("otherPresentationType").value;
+				var error = false;
+				if(data1 === "" || data2 === "" || data3 === ""){
+					error = true;
+					alert("Please fill in the presentation details properly");
+				}
+
+				if(data1 === "Other" && data4 ===""){
+					error = true;
+					alert("Please fill in the Other Presentation type properly");
+				}
 				
+				if(!error){
 				if(document.getElementById("otherPresentationType").value != ""){
 					data1 = document.getElementById("otherPresentationType").value;
 					console.log(data1);
 				}
+
+
 				$('#presentationsAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" +"<button type='button' class='removePresentation btn btn-danger' onclick='removePresentation()'>Delete</button>" +"</td></tr>");
 				$('#presentationType').val("");
 				$('#presentationTitle').val("");
 				$('#presentationForum').val("");
 				$('#otherPresentationType').val("");
+			}
 			}
 		})
 	}
@@ -218,6 +251,9 @@
 				if(document.getElementById("presentationType").value==="Other"){
 					$('#otherPresentationTypeDiv').show();	
 				}
+				else{
+					$('#otherPresentationTypeDiv').hide();	
+				}
 				
 			},
 			error:function(){
@@ -227,18 +263,24 @@
 	}
 </script>
 <script>
-	function addConference(){
+	function addNewConference(){
 		$.ajax({
 			url :'http://localhost:3000',
 			type : 'GET',
 			success : function(){
 				console.log("Add conference function reached");
 				var data1 = document.getElementById("conferenceName").value;
-				
+				var error = false;
+				if(data1 === ""){
+					error = true;
+					alert("Please fill in the conference details properly");
+				}
+
+				if(!error){
 				
 				$('#conferencesAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + "<button type='button' class='removeConference btn btn-danger' onclick='removeConference()'>Delete</button>" +"</td></tr>");
 
-				$('#conferenceName').val("");
+				$('#conferenceName').val(""); }
 			},
 			error:function(){
 				console.log("error");
@@ -262,18 +304,23 @@
 	}
 </script>
 <script>
-	function addAward(){
+	function addNewAward(){
 		$.ajax({
 			url :'http://localhost:3000',
 			type : 'GET',
 			success : function(){
 				console.log("Add conference function reached");
 				var data1 = document.getElementById("awardName").value;
+				var error = false;
+				if(data1 === ""){
+					error = true;
+					alert("Please fill in the award properly!");
+				}
 				
-				
+				if(!error){
 				$('#awardsAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + "<button type='button' class='removeConference btn btn-danger' onclick='removeConference()'>Delete</button>" +"</td></tr>");
 
-				$('#awardName').val("");
+				$('#awardName').val("");}
 			},
 			error:function(){
 				console.log("error");
@@ -443,9 +490,267 @@
 		})	
 	}
 </script>
+<script>
+	function displayAnticipatedProspectusDefenseDate(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				
+				$('#anticipatedProspectusDefenseDate').show();
+				document.getElementById("prospectusAnticipatedDateSession").required=true;
+				document.getElementById("prospectusAnticipatedDateYear").required=true;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
+<script>
+	function hideAnticipatedProspectusDefenseDate(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				
+				$('#anticipatedProspectusDefenseDate').hide();
+				document.getElementById("prospectusAnticipatedDateSession").required=false;
+				document.getElementById("prospectusAnticipatedDateYear").required=false;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
+<script>
+	function displayAnticipatedDateOfMtbiParticipationDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#yearOfMtbiParticipationDiv').hide();
+				$('#anticipatedDateOfMtbiParticipationDiv').show();
+				document.getElementById("mtbiParticipationYear").required=false;
+				document.getElementById("mtbiParticipationRole").required=false;
+				document.getElementById("mtbiAnticipatedDateSession").required=true;
+				document.getElementById("mtbiAnticipatedDateYear").required=true;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
+<script>
+	function displayYearOfMtbiParticipationDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#yearOfMtbiParticipationDiv').show();
+				$('#anticipatedDateOfMtbiParticipationDiv').hide();
+				document.getElementById("mtbiParticipationYear").required=true;
+				document.getElementById("mtbiParticipationRole").required=true;
+				document.getElementById("mtbiAnticipatedDateSession").required=false;
+				document.getElementById("mtbiAnticipatedDateYear").required=false;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
+<script>
+	function displayAddPublicationRowDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addPublicationRowDiv').show();
+				$('#addPublicationButton').show();
+				document.getElementById("publicationName").required=false;
+				document.getElementById("publicationStatus").required=false;
+				document.getElementById("journalName").required = false;
+				document.getElementById("publicationUrl").required=false;
+				document.getElementById("publicationDoi").required=false;
+				$('#publicationUrlDiv').hide();
+				$('#publicationDoiDiv').hide();
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+
+</script>
+<script>
+	function hideAddPublicationRowDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addPublicationRowDiv').hide();
+				$('#addPublicationButton').hide();
+				document.getElementById("publicationName").required=false;
+				document.getElementById("publicationStatus").required=false;
+				document.getElementById("journalName").required = false;
+				document.getElementById("publicationUrl").required=false;
+				document.getElementById("publicationDoi").required=false;
+				$('#publicationUrlDiv').hide();
+				$('#publicationDoiDiv').hide();
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}	
+</script>
+<script>
+	function displayUrlDoi(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				console.log("hello1");
+				if(document.getElementById("publicationStatus").value === "ArXiv"){
+					$('#publicationUrlDiv').hide();
+					document.getElementById("publicationUrl").required = false;
+					$('#publicationDoiDiv').show();
+					document.getElementById("publicationDoi").required = false;
+					console.log("hello2");
+				}
+				else if(document.getElementById("publicationStatus").value === "Published"){
+					$('#publicationUrlDiv').show();
+					document.getElementById("publicationUrl").required = false;
+					$('#publicationDoiDiv').hide();
+					document.getElementById("publicationDoi").required = false;	
+					console.log("hello3");
+				}
+				else{
+					$('#publicationUrlDiv').hide();
+					document.getElementById("publicationUrl").required = false;
+					$('#publicationDoiDiv').hide();
+					document.getElementById("publicationDoi").required = false;	
+					console.log("hello4");
+				}
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
+<script>
+	function displayAddPresentationRowDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addPresentationButton').show();
+				$('#addPresentationRowDiv').show();
+				document.getElementById("presentationType").required=false;
+				document.getElementById("presentationTitle").required=false;
+				document.getElementById("presentationForum").required = false;
+				document.getElementById("otherPresentationType").required=false;
+				if(document.getElementById("presentationType").value == "Other"){
+					$('#otherPresentationTypeDiv').show();
+				}
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})
+	}
+</script>
+<script>
+	function hideAddPresentationRowDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addPresentationButton').hide();
+				$('#addPresentationRowDiv').hide();
+				document.getElementById("presentationType").required=false;
+				document.getElementById("presentationTitle").required=false;
+				document.getElementById("presentationForum").required = false;
+				document.getElementById("otherPresentationType").required=false;
+				$('#otherPresentationTypeDiv').hide();
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})
+	}
+</script>
+<script>
+	function displayAddConferenceRowDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addConferenceRowDiv').show();
+				$('#addConferenceButton').show();
+				document.getElementById("conferenceName").required=false;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
+<script>
+	function hideAddConferenceRowDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addConferenceRowDiv').hide();
+				$('#addConferenceButton').hide();
+				document.getElementById("conferenceName").required=false;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
+<script>
+	function displayAddAwardRowDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addAwardRowDiv').show();
+				$('#addAwardButton').show();
+				document.getElementById("awardName").required=false;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
+<script>
+	function hideAddAwardRowDiv(){
+		$.ajax({
+			url:'http://localhost:3000',
+			type:'GET',
+			success:function(){
+				$('#addAwardRowDiv').hide();
+				$('#addAwardButton').hide();
+				document.getElementById("awardName").required=false;
+			},
+			error:function(){
+				console.log("error");
+			}			
+		})	
+	}
+</script>
 </head>
 <body>
-	<form method="POST" action="#">
+	<form method="POST" action="/addData">
 	<div class="container">
 		<div class="panel panel-info">
 			<div class="panel-heading">Introductory Section</div>
@@ -932,7 +1237,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="coursesAddYes" name="prospectusDefenseCompleted" value="1" required>
+							<input type="radio" id="coursesAddYes" name="prospectusDefenseCompleted" value="1" required onclick="hideAnticipatedProspectusDefenseDate()">
 						</div>
 						<div class="col-md-1">
 							<label class="control-label" for="prospectusDefenseCompleted">
@@ -941,11 +1246,11 @@
 
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="coursesAddNo" name="prospectusDefenseCompleted" value="0">
+							<input type="radio" id="coursesAddNo" name="prospectusDefenseCompleted" value="0" onclick="displayAnticipatedProspectusDefenseDate()">
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" id="anticipatedProspectusDefenseDate" style="display:none;">
 					<div class="form-group pad">
 						<fieldset>
 							<div class="col-md-3">
@@ -961,7 +1266,7 @@
 							</div>
 							<div class="col-md-2">
 								<select class="form-control" id="prospectusAnticipatedDateSession" name="prospectusAnticipatedDateSession">
-									<option value="session" disabled selected="selected">--session--</option>
+									<option value="" disabled selected="selected"> Session </option>
 									<option value="Spring">Spring</option>
 									<option value="Summer">Summer</option>
 									<option value="Fall">Fall</option>
@@ -975,7 +1280,7 @@
 							</div>
 							<div class="col-md-2">
 								<select class="form-control" id="prospectusAnticipatedDateYear" name="prospectusAnticipatedDateYear">
-									<option value="year" disabled selected="selected"> Year </option>
+									<option value="" disabled selected="selected"> Year </option>
 									<%for(var i=2018;i<=2030;i++){%>
 									<option value=<%=i%>><%=i%></option>
 									<%}%>
@@ -998,7 +1303,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="mtbiParticipationYes" name="mtbiParticipation" required value="1">
+							<input type="radio" id="mtbiParticipationYes" name="mtbiParticipation" onclick="displayYearOfMtbiParticipationDiv()" required value="1">
 						</div>
 						<div class="col-md-1">
 							<label class="control-label" for="mtbiParticipation">
@@ -1006,11 +1311,11 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="mtbiParticipationNo" name="mtbiParticipation" value="0">
+							<input type="radio" id="mtbiParticipationNo" name="mtbiParticipation" onclick="displayAnticipatedDateOfMtbiParticipationDiv()" value="0">
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" id="yearOfMtbiParticipationDiv" style="display:none;">
 					<div class="form-group">
 						<div class="col-md-4">
 							<label class="control-label" for="mtbiParticipationYear">
@@ -1018,8 +1323,8 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<select class="form-control" id="prospectusAnticipatedDateYear" name="prospectusAnticipatedDateYear">
-								<option value="year" disabled selected="selected"> Year </option>
+							<select class="form-control" id="mtbiParticipationYear" name="mtbiParticipationYear">
+								<option value="" disabled selected="selected" required> Year </option>
 								<%for(var i=2000;i<=2030;i++){%>
 								<option value=<%=i%>><%=i%></option>
 								<%}%>
@@ -1032,7 +1337,7 @@
 						</div>
 						<div class="col-md-2">
 							<select class="form-control" id="mtbiParticipationRole" name="mtbiParticipationRole">
-								<option value="role" disabled selected="selected">Role</option>
+								<option value="" disabled selected="selected">Role</option>
 								<option value="Undergraduate Participant">Undergraduate Participant</option>
 								<option value="Graduate Participant">Graduate Participant</option>
 								<option value="Mentor">Mentor/Tutor</option>
@@ -1041,7 +1346,7 @@
 					</div>
 					
 				</div>
-				<div class="row">
+				<div class="row" id="anticipatedDateOfMtbiParticipationDiv" style="display:none;">
 					<div class="form-group pad">
 						<fieldset>
 							<div class="col-md-3">
@@ -1056,22 +1361,22 @@
 								</label>
 							</div>
 							<div class="col-md-2">
-								<select class="form-control" id="prospectusAnticipatedDateSession" name="prospectusAnticipatedDateSession">
-									<option value="session" disabled selected="selected">--session--</option>
+								<select class="form-control" id="mtbiAnticipatedDateSession" name="mtbiAnticipatedDateSession">
+									<option value="" disabled selected="selected">--session--</option>
 									<option value="Spring">Spring</option>
 									<option value="Summer">Summer</option>
 									<option value="Fall">Fall</option>
 								</select>
 							</div>
 							<div class="col-md-1">
-								<label class="control-label" for="prospectusAnticipatedDateYear" name="prospectusAnticipatedDateYear">
+								<label class="control-label" for="mtbiAnticipatedDateYear">
 									Year
 								</label>
 								
 							</div>
 							<div class="col-md-2">
-								<select class="form-control" id="prospectusAnticipatedDateYear" name="prospectusAnticipatedDateYear">
-									<option value="year" disabled selected="selected"> Year </option>
+								<select class="form-control" id="mtbiAnticipatedDateYear" name="mtbiAnticipatedDateYear">
+									<option value="" disabled selected="selected"> Year </option>
 									<%for(var i=2018;i<=2030;i++){%>
 									<option value=<%=i%>><%=i%></option>
 									<%}%>
@@ -1093,7 +1398,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="publicationsExistYes" name="publicationsExist" value="1" required> 
+							<input type="radio" id="publicationsExistYes" name="publicationsExist" onclick="displayAddPublicationRowDiv()" value="1" required> 
 						</div>
 						<div class="col-md-1">
 							<label class="control-label" for="publicationsExist">
@@ -1101,7 +1406,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="publicationsExistNo" name="publicationsExist" value="0"> 
+							<input type="radio" id="publicationsExistNo" name="publicationsExist" onclick="hideAddPublicationRowDiv()" value="0"> 
 						</div>
 
 					</div>
@@ -1118,7 +1423,7 @@
 					</tr>
 
 				</table>
-				<div class="row" id="addPublicationRowDiv">
+				<div class="row" id="addPublicationRowDiv" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<label class="control-label" for="publicationName">
@@ -1143,8 +1448,8 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<select id="publicationStatus" class="form-control" name="publicationStatus">
-								<option value="disabled" disabled selected="selected">--status--</option>
+							<select id="publicationStatus" class="form-control" name="publicationStatus" onclick="displayUrlDoi()">
+								<option value="" disabled selected="selected">--status--</option>
 								<option value="Submitted">Submitted</option>
 								<option value="Accepted">Accepted</option>
 								<option value="Published">Published</option>
@@ -1153,7 +1458,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row" id="publicationUrlDiv">
+				<div class="row" id="publicationUrlDiv" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<label class="control-label" for="publicationUrl">
@@ -1165,7 +1470,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row" id="publicationDoiDiv">
+				<div class="row" id="publicationDoiDiv" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<label class="control-label" for="publicationDoi">
@@ -1177,11 +1482,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" id="addPublicationButton" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
-							<button id="addPublication" class="btn btn-success" onclick="addPublication()" type="button"> Add Publication </button>
+							<button id="addPublication" class="btn btn-success" onclick="addNewPublication()" type="button"> Add Publication </button>
 						</div>
 
 					</div>
@@ -1201,7 +1506,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="presentationsExistYes" name="presentationsExist" value="1" required> 
+							<input type="radio" id="presentationsExistYes" name="presentationsExist" value="1" onclick="displayAddPresentationRowDiv()" required> 
 						</div>
 						<div class="col-md-1">
 							<label class="control-label" for="presentationsExist">
@@ -1209,7 +1514,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="presentationsExistNo" name="presentationsExist" value="0"> 
+							<input type="radio" id="presentationsExistNo" name="presentationsExist" onclick="hideAddPresentationRowDiv()" value="0"> 
 						</div>
 
 					</div>
@@ -1223,7 +1528,8 @@
 					</tr>
 
 				</table>
-				<div class="row" id="addPresentationRowDiv">
+				<div class="row" id="addPresentationRowDiv" style="
+				display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<label class="control-label" for="presentationType">
@@ -1233,7 +1539,7 @@
 						</div>
 						<div class="col-md-2">
 							<select id="presentationType" class="form-control" name="presentationType" onchange="displayOtherPresentationType()">
-								<option value="disabled" disabled selected="selected">--Type--</option>
+								<option value="" disabled selected="selected">--Type--</option>
 								<option value="Conference Talk">Conference Talk</option>
 								<option value="Poster">Poster</option>
 								<option value="Seminar">Seminar</option>
@@ -1246,7 +1552,7 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<input type="text" id="presentationTitle" class="form-control" name="presentationTitle">
+							<input type="text" id="presentationTitle" class="form-control" name="presentationTitle"> 
 						</div>
 						<div class="col-md-2">
 							<label class="control-label" for="presenationForum">
@@ -1272,10 +1578,10 @@
 					</div>
 				</div>
 
-				<div class="row">
+				<div class="row" id="addPresentationButton" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
-							<button id="addPresentation" class="btn btn-success" onclick="addPresentation()" type="button"> Add Presentation </button>
+							<button id="addPresentation" class="btn btn-success" onclick="addNewPresentation()" type="button"> Add Presentation </button>
 						</div>
 
 					</div>
@@ -1294,7 +1600,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="conferencesExistYes" name="conferencesExist" value="1" required> 
+							<input type="radio" id="conferencesExistYes" name="conferencesExist" value="1" onclick="displayAddConferenceRowDiv()" required> 
 						</div>
 						<div class="col-md-1">
 							<label class="control-label" for="conferencesExist">
@@ -1302,7 +1608,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="conferencesExistNo" name="conferencesExist" value="0"> 
+							<input type="radio" id="conferencesExistNo" name="conferencesExist" onclick="hideAddConferenceRowDiv()" value="0"> 
 						</div>
 
 					</div>
@@ -1315,7 +1621,7 @@
 					</tr>
 
 				</table>
-				<div class="row" id="addConferenceRowDiv">
+				<div class="row" id="addConferenceRowDiv" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<label class="control-label" for="conferenceName">
@@ -1323,18 +1629,18 @@
 								<sup class="star">*</sup>
 							</label>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-4">
 							<input type="text" id="conferenceName" class="form-control" name="conferenceName">
 						</div>
 					</div>
 					
 				</div>
 				
-				<div class="row">
+				<div class="row" id="addConferenceButton" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
-							<button id="addConference" class="btn btn-success" onclick="addConference()" type="button"> Add Presentation </button>
+							<button id="addConference" class="btn btn-success" onclick="addNewConference()" type="button"> Add Presentation </button>
 						</div>
 
 					</div>
@@ -1353,7 +1659,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="awardsExistYes" name="awardsExist" value="1" required> 
+							<input type="radio" id="awardsExistYes" name="awardsExist" value="1" onclick="displayAddAwardRowDiv()" required> 
 						</div>
 						<div class="col-md-1">
 							<label class="control-label" for="awardsExist">
@@ -1361,7 +1667,7 @@
 							</label>
 						</div>
 						<div class="col-md-1">
-							<input type="radio" id="awardsExistNo" name="awardsExist" value="0"> 
+							<input type="radio" id="awardsExistNo" name="awardsExist" onclick="hideAddAwardRowDiv()" value="0"> 
 						</div>
 
 					</div>
@@ -1374,7 +1680,7 @@
 					</tr>
 
 				</table>
-				<div class="row" id="addAwardRowDiv">
+				<div class="row" id="addAwardRowDiv" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<label class="control-label" for="awardName">
@@ -1390,11 +1696,11 @@
 					
 				</div>
 				
-				<div class="row">
+				<div class="row" id="addAwardButton" style="display:none;">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
-							<button id="addAward" class="btn btn-success" onclick="addAward()" type="button"> Add Award </button>
+							<button id="addAward" class="btn btn-success" onclick="addNewAward()" type="button"> Add Award </button>
 						</div>
 
 					</div>
@@ -1433,7 +1739,7 @@
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
-							<button id="addAward" class="btn btn-success" type="submit"> Submit form </button>
+							<button id="submitButton" class="btn btn-success" type="submit"> Submit form </button>
 						</div>
 
 					</div>
