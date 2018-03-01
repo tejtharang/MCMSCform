@@ -62,8 +62,29 @@
 				$('#courseAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + "<button type='button' class='removeCourse btn btn-danger' onclick='removeCourse()'>delete</button>" +"</td></tr>");
 				$("#courseName").val("");
 				$("#courseGrade").val("");
-				}        	    
-			},
+				console.log(7);
+				
+				var table = document.getElementById("courseAddTable");
+				console.log(table);
+				var listOfObjects = [];
+				var att = [];
+				
+				for(var i=1, row; row = table.rows[i];i++){
+					
+					for(var j=0,col; col=row.cells[j];j++){
+						att[j] = table.rows[i].cells[j].innerHTML;
+					}
+					listOfObjects.push({
+						course : att[0],
+						grade : att[1]
+					});
+				}
+				for(var i = 0; i<listOfObjects.length; i++){
+					console.log(listOfObjects[i]);
+				}
+				document.getElementById("courseAddTableHiddenInput").value = JSON.stringify(listOfObjects);
+			}
+		}, 
 			error : function() {
 				console.log('error');
 			}
@@ -107,7 +128,29 @@
 				$('#memberAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" +"<button type='button' class='removeMember btn btn-danger' onclick='removeMember()'>Delete</button>" +"</td></tr>");
 				$("#memberName").val("");
 				$("#memberPosition").val("");
-				$("#memberEmail").val(""); }        	    
+				$("#memberEmail").val(""); 
+				var table = document.getElementById("memberAddTable");
+				console.log(table);
+				var listOfObjects = [];
+				var att = [];
+				
+				for(var i=1, row; row = table.rows[i];i++){
+					
+					for(var j=0,col; col=row.cells[j];j++){
+						att[j] = table.rows[i].cells[j].innerHTML;
+					}
+					listOfObjects.push({
+						memberPosition : att[0],
+						memberName : att[1],
+						memberEmail : att[2]
+					});
+				}
+				for(var i = 0; i<listOfObjects.length; i++){
+					console.log(listOfObjects[i]);
+				}
+				document.getElementById("memberAddTableHiddenInput").value = JSON.stringify(listOfObjects);
+				
+				}        	    
 			},
 			error : function() {
 				console.log('error');
@@ -168,6 +211,29 @@
 				$('#publicationStatus').val("");
 				$('#publicationUrl').val("");
 				$('#publicationDoi').val("");
+				
+				var table = document.getElementById("publicationsAddTable");
+				console.log(table);
+				var listOfObjects = [];
+				var att = [];
+				
+				for(var i=1, row; row = table.rows[i];i++){
+					
+					for(var j=0,col; col=row.cells[j];j++){
+						att[j] = table.rows[i].cells[j].innerHTML;
+					}
+					listOfObjects.push({
+						publication : att[0],
+						journal : att[1],
+						status : att[2],
+						url	: att[3],
+						doi : att[4]
+					});
+				}
+				for(var i = 0; i<listOfObjects.length; i++){
+					console.log(listOfObjects[i]);
+				}
+				document.getElementById("publicationAddTableHiddenInput").value = JSON.stringify(listOfObjects);
 				}
 			}
 		})
@@ -221,6 +287,26 @@
 				$('#presentationTitle').val("");
 				$('#presentationForum').val("");
 				$('#otherPresentationType').val("");
+				var table = document.getElementById("presentationsAddTable");
+				console.log(table);
+				var listOfObjects = [];
+				var att = [];
+				
+				for(var i=1, row; row = table.rows[i];i++){
+					
+					for(var j=0,col; col=row.cells[j];j++){
+						att[j] = table.rows[i].cells[j].innerHTML;
+					}
+					listOfObjects.push({
+						type : att[0],
+						title : att[1],
+						forum : att[2]
+					});
+				}
+				for(var i = 0; i<listOfObjects.length; i++){
+					console.log(listOfObjects[i]);
+				}
+				document.getElementById("presentationAddTableHiddenInput").value = JSON.stringify(listOfObjects);
 			}
 			}
 		})
@@ -280,7 +366,27 @@
 				
 				$('#conferencesAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + "<button type='button' class='removeConference btn btn-danger' onclick='removeConference()'>Delete</button>" +"</td></tr>");
 
-				$('#conferenceName').val(""); }
+				$('#conferenceName').val(""); 
+				var table = document.getElementById("conferencesAddTable");
+				console.log(table);
+				var listOfObjects = [];
+				var att = [];
+				
+				for(var i=1, row; row = table.rows[i];i++){
+					
+					for(var j=0,col; col=row.cells[j];j++){
+						att[j] = table.rows[i].cells[j].innerHTML;
+					}
+					listOfObjects.push({
+						conference : att[0],
+						
+					});
+				}
+				for(var i = 0; i<listOfObjects.length; i++){
+					console.log(listOfObjects[i]);
+				}
+				document.getElementById("conferenceAddTableHiddenInput").value = JSON.stringify(listOfObjects);
+				}
 			},
 			error:function(){
 				console.log("error");
@@ -320,7 +426,27 @@
 				if(!error){
 				$('#awardsAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + "<button type='button' class='removeConference btn btn-danger' onclick='removeConference()'>Delete</button>" +"</td></tr>");
 
-				$('#awardName').val("");}
+				$('#awardName').val("");
+				var table = document.getElementById("awardsAddTable");
+				console.log(table);
+				var listOfObjects = [];
+				var att = [];
+				
+				for(var i=1, row; row = table.rows[i];i++){
+					
+					for(var j=0,col; col=row.cells[j];j++){
+						att[j] = table.rows[i].cells[j].innerHTML;
+					}
+					listOfObjects.push({
+						award : att[0],
+						
+					});
+				}
+				for(var i = 0; i<listOfObjects.length; i++){
+					console.log(listOfObjects[i]);
+				}
+				document.getElementById("awardAddTableHiddenInput").value = JSON.stringify(listOfObjects);
+				}
 			},
 			error:function(){
 				console.log("error");
@@ -750,7 +876,7 @@
 </script>
 </head>
 <body>
-	<form method="POST" action="/addData">
+	<form method="post" action="/addData">
 	<div class="container">
 		<div class="panel panel-info">
 			<div class="panel-heading">Introductory Section</div>
@@ -1026,13 +1152,13 @@
 						</div>
 					</div>
 				</div>
-				<table class="table table-hover pad" id="courseAddTable">
+				<table class="table table-hover pad" name="courseAddTable" id="courseAddTable">
 					<tr>
 						<th>Course</th>
 						<th>Grade</th>
 						<th>Action</th>
 					</tr>
-
+					<input type="hidden" name="courseAddTableHiddenInput" id="courseAddTableHiddenInput" value=""	/>
 				</table>
 				<div class="row" id="addCourseRowDiv" style="display:none;">
 					<div class="form-group pad">
@@ -1106,13 +1232,13 @@
 						</div>
 					</div>
 				</div>
-				<table class="table table-hover pad" id="memberAddTable">
+				<table class="table table-hover pad" id="memberAddTable" name="memberAddTable">
 					<tr>
 						<th>Member Position</th>
 						<th>Member Name</th>
 						<th>Member Email ID</th>
 					</tr>
-
+					<input type="hidden" name="memberAddTableHiddenInput" id="memberAddTableHiddenInput" value=""	/>
 				</table>
 				<div class="row" id="addMemberRowDiv" style="display:none;">
 					<div class="form-group pad">
@@ -1412,7 +1538,7 @@
 					</div>
 
 				</div>	
-				<table class="table table-hover pad" id="publicationsAddTable">
+				<table class="table table-hover pad" id="publicationsAddTable" name="publicationsAddTable">
 					<tr>
 						<th class="col-md-2">Publication</th>
 						<th class="col-md-2">Journal</th>
@@ -1421,7 +1547,7 @@
 						<th class="col-md-2">DOI</th>
 						<th class="col-md-1">Action</th>
 					</tr>
-
+					<input type="hidden" name="publicationAddTableHiddenInput" id="publicationAddTableHiddenInput" value=""	/>
 				</table>
 				<div class="row" id="addPublicationRowDiv" style="display:none;">
 					<div class="form-group pad">
@@ -1520,13 +1646,13 @@
 					</div>
 
 				</div>	
-				<table class="table table-hover pad" id="presentationsAddTable">
+				<table class="table table-hover pad" id="presentationsAddTable" name="presentationsAddTable">
 					<tr>
 						<th class="col-md-3">Presentation</th>
 						<th class="col-md-3">Title</th>
 						<th class="col-md-3">Forum</th>
 					</tr>
-
+					<input type="hidden" name="presentationAddTableHiddenInput" id="presentationAddTableHiddenInput" value=""	/>
 				</table>
 				<div class="row" id="addPresentationRowDiv" style="
 				display:none;">
@@ -1591,7 +1717,7 @@
 					<div class="form-group pad">
 						<div class="col-md-4">
 							<label class="control-label" for="conferences">
-								Do you want to add Conferences for the current year?
+								Have you attended any conferences in the current year?
 							</label>
 						</div>
 						<div class="col-md-1">
@@ -1614,12 +1740,12 @@
 					</div>
 
 				</div>	
-				<table class="table table-hover pad" id="conferencesAddTable">
+				<table class="table table-hover pad" id="conferencesAddTable" name="conferencesAddTable">
 					<tr>
 						<th class="col-md-3">Conference Name</th>
 						<th class="col-md-2">Action</th>
 					</tr>
-
+					<input type="hidden" name="conferenceAddTableHiddenInput" id="conferenceAddTableHiddenInput" value=""	/>
 				</table>
 				<div class="row" id="addConferenceRowDiv" style="display:none;">
 					<div class="form-group pad">
@@ -1673,12 +1799,12 @@
 					</div>
 
 				</div>	
-				<table class="table table-hover pad" id="awardsAddTable">
+				<table class="table table-hover pad" id="awardsAddTable" name="awardsAddTable">
 					<tr>
 						<th class="col-md-3">Award</th>
 						<th class="col-md-2">Action</th>
 					</tr>
-
+					<input type="hidden" name="awardAddTableHiddenInput" id="awardAddTableHiddenInput" value=""	/>
 				</table>
 				<div class="row" id="addAwardRowDiv" style="display:none;">
 					<div class="form-group pad">
