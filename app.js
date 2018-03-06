@@ -1,18 +1,11 @@
-
 var express = require("express");
 var app = express();
 var bodyParser = require('body-parser');
-var options = {
-  "auth": {
-      "authSource": "admin"
-  },
-  "user": "admin",
-  "pass": "admin123"
-};
-
 var mongoose = require("mongoose");
+var mongoClient = require("mongodb").MongoClient;
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost:27017/mcmsc",options);
+var url = "mongodb://localhost:27017/mcmsc";
+mongoose.connect("mongodb://localhost:27017/mcmsc");
 var schema = new mongoose.Schema({
 	degreeSelect : String,
 	mastersInPassing : String,
@@ -36,8 +29,8 @@ var schema = new mongoose.Schema({
 	memberEmail : String,
 	reasonAdvisoryCommittee : String,
 	metChair: String,
-  	reasonNotMetChair: String,
-  	prospectusDefenseCompleted: String,
+  reasonNotMetChair: String,
+  prospectusDefenseCompleted: String,
   mtbiParticipation: String,
   mtbiParticipationYear: String,
   mtbiParticipationRole: String,
@@ -66,6 +59,22 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.set("view engine","ejs");
 
+// code for fetching all data from a mongo database
+app.get("/adminView",function(req,res){
+  mongoClient.connect(url,function(err,db){
+    if (err) throw err;
+    var dbo = db.db("mcmsc");
+    dbo.collection("students").find({}).toArray(function(err,result){
+      if (err) throw err;
+      for(i=0;i<result.length;i++){
+        console.log(result[i].firstName);
+      }
+      app.locals.result = result;
+      res.render("adminView.ejs");
+      db.close();
+    });
+  });
+})
 
 //Defining database schema
 app.post("/addData",function(req,res){
@@ -76,10 +85,20 @@ app.post("/addData",function(req,res){
       .then(item => {
         console.log("hello there");
         res.send("item saved to database");
+        
       })
       .catch(err => {
         res.status(400).send("unable to save to database");
       });
+    Student.find({},function(err,students){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log("123");
+        console.log(students);
+      }
+    });
 });
 
 app.get("*",function(req,res){
