@@ -1,0 +1,180 @@
+<html>
+<title>Administrator View</title>
+
+<head>
+    <center>
+        <h1>
+            <%= result[0].firstName %>
+                <%= result[0].lastName %>'s submission</h1>
+    </center>
+</head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/core.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<style>
+    .star {
+        color: red;
+    }
+
+    .pad {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="panel panel-info">
+            <div class="panel-heading">Introductory Section</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">First Name</label>
+                    </div>
+                    <div class="col-md-4">
+                        <%=  result[0].firstName %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Last Name</label>
+                    </div>
+                    <div class="col-md-4">
+                        <%= result[0].lastName %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Academic Year</label>
+                    </div>
+                    <div class="col-md-4">
+                        <% var curtime = new Date() %>
+                            <% if(curtime.getMonth() >=8) { %>
+                                Fall
+                                <%= curtime.getFullYear() %> - Spring
+                                    <%= curtime.getFullYear() + 1 %>
+                                        <% } %>
+                                            <% if(curtime.getMonth() < 8){ %>
+                                                Fall
+                                                <%= curtime.getFullYear() - 1 %> - Spring
+                                                    <%= curtime.getFullYear() %>
+                                                        <% } %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">ASUrite</label>
+                    </div>
+                    <div class="col-md-4">
+                        <%=  result[0].asurite %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">ASU ID</label>
+                    </div>
+                    <div class="col-md-4">
+                        <%=  result[0].idNumber %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Degree</label>
+                    </div>
+                    <div class="col-md-4">
+                        <%=  result[0].degreeSelect %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Master's in passing</label>
+                    </div>
+                    <div class="col-md-4">
+                        <% if(result[0].mastersInPassing == '0'){ %>
+                            No
+                            <% } %>
+                                <% if(result[0].mastersInPassing == '1'){ %>
+                                    Yes
+                                    <% } %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Graduating this year</label>
+                    </div>
+                    <div class="col-md-4">
+                        <% if(result[0].graduation == '0'){ %>
+                            No
+                            <% } %>
+                                <% if(result[0].graduation == '1'){ %>
+                                    Yes
+                                    <% } %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Program Start Date</label>
+                    </div>
+                    <div class="col-md-4">
+                        <%=  result[0].programStartDate %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Current Semester</label>
+                    </div>
+                    <div class="col-md-4">
+                        <%=  result[0].currentSemester %>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">GPA</label>
+                    </div>
+                    <div class="col-md-4">
+                        <%=  result[0].gpa %>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">Section - A Program of Study Status</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Courses</label>
+                    </div>
+                    <div class="col-md-4">
+                        <% if(result[0].coursesAdd != 'on'){ %>
+                            Not taken
+                       <% } %>
+                        <% if(result[0].coursesAdd == 'on'){ %>
+                            Yes
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</body>
+
+</html>

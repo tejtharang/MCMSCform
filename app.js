@@ -59,6 +59,23 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.set("view engine","ejs");
 
+// individual student data from adminView
+app.get("/adminView/:idno",function(req,res){
+  var id = req.params.idno;
+  mongoClient.connect(url,function(err,db){
+    console.log("coming here");
+    if (err) throw err;
+    var dbo = db.db("mcmsc");
+    dbo.collection("students").find({idNumber : id}).toArray(function(err,result){
+      if (err) throw err;
+      app.locals.result = result;
+      console.log(result);
+      res.render("adminViewEachStudent.ejs");
+      db.close();
+    });
+  });
+});
+
 // code for fetching all data from a mongo database
 app.get("/adminView",function(req,res){
   mongoClient.connect(url,function(err,db){
@@ -75,6 +92,7 @@ app.get("/adminView",function(req,res){
     });
   });
 })
+
 
 //Defining database schema
 app.post("/addData",function(req,res){

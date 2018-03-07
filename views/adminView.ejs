@@ -40,7 +40,10 @@
                             <th scope="row"><%= i+1 %></th>
                             <td><%= result[i].firstName %></td>
                             <td><%= result[i].lastName %></td>
-                            <td><%= result[i].idNumber %></td>
+                            <td>
+                                <% var url = "/adminView/" + result[i].idNumber %>
+                                <a href=<%= url %>><%= result[i].idNumber %></a>
+                            </td>
                           </tr>
                           <% } %>
                           
