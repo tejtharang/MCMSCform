@@ -69,7 +69,9 @@ app.get("/adminView/:idno",function(req,res){
     dbo.collection("students").find({idNumber : id}).toArray(function(err,result){
       if (err) throw err;
       app.locals.result = result;
-      console.log(result);
+      //console.log(result[0]);
+      //var st = JSON.parse(result[0].courseAddTableHiddenInput);
+      //console.log(st);
       res.render("adminViewEachStudent.ejs");
       db.close();
     });

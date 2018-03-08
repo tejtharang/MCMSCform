@@ -167,10 +167,145 @@
                             Yes
                         <% } %>
                     </div>
+                    <% if(result[0].coursesAdd != 'on'){ %>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label">Reason for not taking any courses</label>
+                            </div>
+                            <div class="col-md-4">
+                                <%=  result[0].reasonCourse %>
+                            </div>
+                        </div>
+                    </div>
+                   <% } %>
+                    <% if(result[0].coursesAdd == 'on'){ %>
+                        <% var st = JSON.parse(result[0].courseAddTableHiddenInput); %>
+                        <div class="container">
+                        <table class="table">
+                            <thead class="thead-light">
+                              <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">Course</th>
+                                <th scope="col">Grade</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            <% for(i=0;i<st.length;i++){ %>
+                                  <tr>
+                                    <th scope="row"><%= i+1 %></th>
+                                    <td><%= st[i].course %></td>
+                                    <td><%= st[i].grade %></td>
+                                  </tr>
+                             <% } %>
+                            </tbody>
+                        </table>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Advisory Committee</label>
+                    </div>
+                    <div class="col-md-4">
+                        <% if(result[0].membersAdd != 'on'){ %>
+                            Not taken
+                       <% } %>
+                        <% if(result[0].membersAdd == 'on'){ %>
+                            Yes
+                        <% } %>
+                    </div>
+                    <% if(result[0].membersAdd != 'on'){ %>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="control-label">Reason for not having an advisory committee</label>
+                            </div>
+                            <div class="col-md-4">
+                                <%=  result[0].reasonAdvisoryCommittee %>
+                            </div>
+                        </div>
+                    </div>
+                   <% } %>
+                    <% if(result[0].coursesAdd == 'on'){ %>
+                        <% var st = JSON.parse(result[0].memberAddTableHiddenInput); %>
+                        <div class="container">
+                        <table class="table">
+                            <thead class="thead-light">
+                              <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">Position</th>
+                                <th scope="col">Name</th>
+                                <th scopr="col">Email</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            <% for(i=0;i<st.length;i++){ %>
+                                  <tr>
+                                    <th scope="row"><%= i+1 %></th>
+                                    <td><%= st[i].memberPosition %></td>
+                                    <td><%= st[i].memberName %></td>
+                                    <td><%= st[i].memberEmail %></td>
+                                  </tr>
+                             <% } %>
+                            </tbody>
+                        </table>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="control-label">Has the student met with the chair</label>
+                    </div>
+                    <div class="col-md-4">
+                        <% if(result[0].metChair != 'on'){ %>
+                            No
+                       <% } %>
+                        <% if(result[0].metChair == 'on'){ %>
+                            Yes
+                        <% } %>
+                    </div>
                 </div>
             </div>
         </div>
-
+        <div class="panel panel-info">
+            <div class="panel-heading">Section B - Student Progress</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                            <label class="control-label">Has the student completed Prospectus Defense</label>
+                        </div>
+                        <div class="col-md-4">
+                            <% if(result[0].prospectusDefenseCompleted != '1'){ %>
+                                No
+                           <% } %>
+                            <% if(result[0].prospectusDefenseCompleted == '1'){ %>
+                                Yes
+                            <% } %>
+                        </div>
+                </div>
+                <div class="row">
+                        <div class="col-md-4">
+                                <label class="control-label">Has the student participated in MTBI?</label>
+                            </div>
+                            <div class="col-md-4">
+                                <% if(result[0].mtbiParticipation != '1'){ %>
+                                    No
+                               <% } %>
+                                <% if(result[0].mtbiParticipation == '1'){ %>
+                                    Yes
+                                <% } %>
+                            </div>
+                </div>
+                            
+                <% if(result[0].mtbiParticipation != '1'){ %>
+                   
+                <% } %>
+                <% if(result[0].mtbiParticipation == '1'){ %>
+                    Yes
+                <% } %>
+            </div>
+        </div>
 
 
     </div>
