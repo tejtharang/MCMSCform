@@ -22,6 +22,12 @@
 		padding-top: 10px;
 		padding-bottom: 10px;
 	}
+  .green{
+    color : green;
+  }
+  .red{
+    color: red;
+  }
     </style>
     <body>
         <div class="container">
@@ -32,6 +38,7 @@
                             <th scope="col">First Name</th>
                             <th scope="col">Last Name</th>
                             <th scope="col">ASU ID</th>
+                            <th scope="col">Approval</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -44,6 +51,12 @@
                                 <% var url = "/adminView/" + result[i].idNumber %>
                                 <a href=<%= url %>><%= result[i].idNumber %></a>
                             </td>
+                            <% if(result[i].directorApproval == '1') { %>
+                            <td class="green"> Approved </td>
+                            <% } %>
+                            <% if(result[i].directorApproval == '0') { %>
+                              <td class="red"> Rejected </td>
+                              <% } %>
                           </tr>
                           <% } %>
                           

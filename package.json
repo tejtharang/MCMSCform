@@ -21,6 +21,7 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "mongoose": "^5.0.7",
+    "nodemailer": "^4.6.2",
     "tabletojson": "^0.7.1"
   }
 }

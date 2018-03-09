@@ -162,153 +162,469 @@
                     <div class="col-md-4">
                         <% if(result[0].coursesAdd != 'on'){ %>
                             Not taken
-                       <% } %>
+                            <% } %>
+                                <% if(result[0].coursesAdd == 'on'){ %>
+                                    Yes
+                                    <% } %>
+                    </div>
+                </div>
+                <% if(result[0].coursesAdd != 'on'){ %>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="control-label">Reason for not taking any courses</label>
+                        </div>
+                        <div class="col-md-4">
+                            <%=  result[0].reasonCourse %>
+                        </div>
+                    </div>
+
+                    <% } %>
                         <% if(result[0].coursesAdd == 'on'){ %>
-                            Yes
-                        <% } %>
-                    </div>
-                    <% if(result[0].coursesAdd != 'on'){ %>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="control-label">Reason for not taking any courses</label>
-                            </div>
-                            <div class="col-md-4">
-                                <%=  result[0].reasonCourse %>
-                            </div>
-                        </div>
-                    </div>
-                   <% } %>
-                    <% if(result[0].coursesAdd == 'on'){ %>
-                        <% var st = JSON.parse(result[0].courseAddTableHiddenInput); %>
-                        <div class="container">
-                        <table class="table">
-                            <thead class="thead-light">
-                              <tr>
-                                <th scope="col">S.No</th>
-                                <th scope="col">Course</th>
-                                <th scope="col">Grade</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            <% for(i=0;i<st.length;i++){ %>
-                                  <tr>
-                                    <th scope="row"><%= i+1 %></th>
-                                    <td><%= st[i].course %></td>
-                                    <td><%= st[i].grade %></td>
-                                  </tr>
-                             <% } %>
-                            </tbody>
-                        </table>
-                        </div>
-                    <% } %>
+                            <% if(result[0].courseAddTableHiddenInput != ''){ %>
+                                <% var st = JSON.parse(result[0].courseAddTableHiddenInput); %>
+
+
+                                    <table class="table table-hover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">Course</th>
+                                                <th scope="col">Grade</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for(i=0;i<st.length;i++){ %>
+                                                <tr>
+                                                    <th scope="row">
+                                                        <%= i+1 %>
+                                                    </th>
+                                                    <td>
+                                                        <%= st[i].course %>
+                                                    </td>
+                                                    <td>
+                                                        <%= st[i].grade %>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                        </tbody>
+                                    </table>
+
+                                    <% } %>
+                                        <% } %>
+
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="control-label">Advisory Committee</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <% if(result[0].membersAdd != 'on'){ %>
+                                                        Not taken
+                                                        <% } %>
+                                                            <% if(result[0].membersAdd == 'on'){ %>
+                                                                Yes
+                                                                <% } %>
+                                                </div>
+                                                <% if(result[0].membersAdd != 'on'){ %>
+                                                    <div class="col-md-4">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label class="control-label">Reason for not having an advisory committee</label>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <%=  result[0].reasonAdvisoryCommittee %>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                            </div>
+                                            <% if(result[0].membersAdd == 'on'){ %>
+                                                <% if(result[0].memberAddTableHiddenInput != '') { %>
+                                                    <% var st = JSON.parse(result[0].memberAddTableHiddenInput); %>
+
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col">S.No</th>
+                                                                    <th scope="col">Position</th>
+                                                                    <th scope="col">Name</th>
+                                                                    <th scopr="col">Email</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% for(i=0;i<st.length;i++){ %>
+                                                                    <tr>
+                                                                        <th scope="row">
+                                                                            <%= i+1 %>
+                                                                        </th>
+                                                                        <td>
+                                                                            <%= st[i].memberPosition %>
+                                                                        </td>
+                                                                        <td>
+                                                                            <%= st[i].memberName %>
+                                                                        </td>
+                                                                        <td>
+                                                                            <%= st[i].memberEmail %>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <% } %>
+                                                            </tbody>
+                                                        </table>
+
+                                                        <% } %>
+                                                            <% } %>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">Has the student met with the chair</label>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label class="control-label">Advisory Committee</label>
-                    </div>
-                    <div class="col-md-4">
-                        <% if(result[0].membersAdd != 'on'){ %>
-                            Not taken
-                       <% } %>
-                        <% if(result[0].membersAdd == 'on'){ %>
-                            Yes
+                <div class="col-md-4">
+                    <% if(result[0].metChair != 'on'){ %>
+                        No
                         <% } %>
-                    </div>
-                    <% if(result[0].membersAdd != 'on'){ %>
-                    <div class="col-md-4">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="control-label">Reason for not having an advisory committee</label>
-                            </div>
-                            <div class="col-md-4">
-                                <%=  result[0].reasonAdvisoryCommittee %>
-                            </div>
-                        </div>
-                    </div>
-                   <% } %>
-                    <% if(result[0].coursesAdd == 'on'){ %>
-                        <% var st = JSON.parse(result[0].memberAddTableHiddenInput); %>
-                        <div class="container">
-                        <table class="table">
-                            <thead class="thead-light">
-                              <tr>
-                                <th scope="col">S.No</th>
-                                <th scope="col">Position</th>
-                                <th scope="col">Name</th>
-                                <th scopr="col">Email</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            <% for(i=0;i<st.length;i++){ %>
-                                  <tr>
-                                    <th scope="row"><%= i+1 %></th>
-                                    <td><%= st[i].memberPosition %></td>
-                                    <td><%= st[i].memberName %></td>
-                                    <td><%= st[i].memberEmail %></td>
-                                  </tr>
-                             <% } %>
-                            </tbody>
-                        </table>
-                        </div>
-                    <% } %>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label class="control-label">Has the student met with the chair</label>
-                    </div>
-                    <div class="col-md-4">
-                        <% if(result[0].metChair != 'on'){ %>
-                            No
-                       <% } %>
-                        <% if(result[0].metChair == 'on'){ %>
-                            Yes
-                        <% } %>
-                    </div>
+                            <% if(result[0].metChair == 'on'){ %>
+                                Yes
+                                <% } %>
                 </div>
             </div>
         </div>
+
         <div class="panel panel-info">
             <div class="panel-heading">Section B - Student Progress</div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-4">
-                            <label class="control-label">Has the student completed Prospectus Defense</label>
-                        </div>
-                        <div class="col-md-4">
-                            <% if(result[0].prospectusDefenseCompleted != '1'){ %>
-                                No
-                           <% } %>
-                            <% if(result[0].prospectusDefenseCompleted == '1'){ %>
-                                Yes
+                        <label class="control-label">Has the student completed Prospectus Defense</label>
+                    </div>
+                    <div class="col-md-4">
+                        <% if(result[0].prospectusDefenseCompleted != '1'){ %>
+                            No
                             <% } %>
-                        </div>
+                                <% if(result[0].prospectusDefenseCompleted == '1'){ %>
+                                    Yes
+                                    <% } %>
+                    </div>
                 </div>
-                <div class="row">
+                <% if(result[0].prospectusDefenseCompleted != '1'){ %>
+                    <div class="row">
                         <div class="col-md-4">
+                            Anticipated Date for Prospectus Defense
+                        </div>
+                        <div class="col-md-2">
+                            <%= result[0].prospectusAnticipatedDateSession %>
+                        </div>
+                        <div class="col-md-2">
+                            <%= result[0].prospectusAnticipatedDateYear %>
+                                <% console.log(result[0]); %>
+                        </div>
+
+                    </div>
+                    <% } %>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4">
                                 <label class="control-label">Has the student participated in MTBI?</label>
                             </div>
                             <div class="col-md-4">
                                 <% if(result[0].mtbiParticipation != '1'){ %>
                                     No
-                               <% } %>
-                                <% if(result[0].mtbiParticipation == '1'){ %>
-                                    Yes
-                                <% } %>
+                                    <% } %>
+                                        <% if(result[0].mtbiParticipation == '1'){ %>
+                                            Yes
+                                            <% } %>
                             </div>
+                        </div>
+
+                        <% if(result[0].mtbiParticipation != '1'){ %>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="control-label">Anticipated Session</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <%= result[0].mtbiAnticipatedDateSession %>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="control-label">Anticipated Year</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <%= result[0].mtbiAnticipatedDateYear %>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% if(result[0].mtbiParticipation == '1'){ %>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label class="control-label">Year</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <%= result[0].mtbiParticipationYear %>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">Role</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <%= result[0].mtbiParticipationRole %>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label class="control-label">
+                                                    <u>Publications</u>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <% if(result[0].publicationsExist != '1'){ %>
+                                                    No Publications
+                                                    <% } %>
+                                                        <% if(result[0].publicationsExist == '1'){ %>
+                                                            Given below
+                                                            <% } %>
+                                            </div>
+                                        </div>
+                                        <% if(result[0].publicationsExist == '1'){ %>
+                                            <% if(result[0].publicationAddTableHiddenInput != '') { %>
+                                                <% var st = JSON.parse(result[0].publicationAddTableHiddenInput); %>
+
+                                                    <table class="table table-hover">
+                                                        <thead class="thead-light">
+                                                            <tr>
+                                                                <th scope="col">Publication</th>
+                                                                <th scope="col">Journal</th>
+                                                                <th scope="col">Status</th>
+                                                                <th scope="col">URL</th>
+                                                                <th scope="col">DOI</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% for(i=0;i<st.length;i++){ %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <%= st[i].publication %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= st[i].journal %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= st[i].status %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= st[i].url %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= st[i].doi %>
+                                                                    </td>
+                                                                </tr>
+                                                                <% } %>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <% } %>
+                                                        <% } %>
+                                                            <hr>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <label class="control-label">
+                                                                        <u>Presentations</u>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <% if(result[0].presentationsExist != '1'){ %>
+                                                                        No Presentations
+                                                                        <% } %>
+                                                                            <% if(result[0].presentationsExist == '1'){ %>
+                                                                                Given below
+                                                                                <% } %>
+                                                                </div>
+                                                            </div>
+                                                            <% if(result[0].presentationsExist == '1'){ %>
+                                                                <% if(result[0].presentationAddTableHiddenInput != '') { %>
+                                                                    <% var st = JSON.parse(result[0].presentationAddTableHiddenInput); %>
+                                                                        <table class="table table-hover">
+                                                                            <thead class="thead-light">
+                                                                                <tr>
+                                                                                    <th scope="col">Type</th>
+                                                                                    <th scope="col">Title</th>
+                                                                                    <th scope="col">Forum</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <% for(i=0;i<st.length;i++){ %>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <%= st[i].type %>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <%= st[i].title %>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <%= st[i].forum %>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <% } %>
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                        <% } %>
+                                                                            <% } %>
+                                                                                <hr>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-4">
+                                                                                        <label class="control-label">
+                                                                                            <u>Conferences</u>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    <div class="col-md-4">
+                                                                                        <% if(result[0].conferencesExist != '1'){ %>
+                                                                                            No Conferences attended
+                                                                                            <% } %>
+                                                                                                <% if(result[0].conferencesExist == '1'){ %>
+                                                                                                    Given below
+                                                                                                    <% } %>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <% if(result[0].conferencesExist == '1'){ %>
+                                                                                    <% if(result[0].conferenceAddTableHiddenInput != '') { %>
+                                                                                        <% var st = JSON.parse(result[0].conferenceAddTableHiddenInput); %>
+
+                                                                                            <table class="table table-hover">
+                                                                                                <thead class="thead-light">
+                                                                                                    <tr>
+                                                                                                        <th scope="col">S.No</th>
+                                                                                                        <th scope="col">Conference</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <% for(i=0;i<st.length;i++){ %>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <%= i+1 %>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <%= st[i].conference %>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        <% } %>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            <% } %>
+                                                                                                <% } %>
+                                                                                                    <hr>
+                                                                                                    
+                                                                                <div class="row">
+                                                                                    <div class="col-md-4">
+                                                                                        <label class="control-label">
+                                                                                            <u>Awards</u>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    <div class="col-md-4">
+                                                                                        <% if(result[0].awardsExist != '1'){ %>
+                                                                                            No Awards received
+                                                                                            <% } %>
+                                                                                                <% if(result[0].awardsExist == '1'){ %>
+                                                                                                    Given below
+                                                                                                    <% } %>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <% if(result[0].awardsExist == '1'){ %>
+                                                                                    <% if(result[0].awardAddTableHiddenInput != '') { %>
+                                                                                        <% var st = JSON.parse(result[0].awardAddTableHiddenInput); %>
+
+                                                                                            <table class="table table-hover">
+                                                                                                <thead class="thead-light">
+                                                                                                    <tr>
+                                                                                                        <th scope="col">S.No</th>
+                                                                                                        <th scope="col">Award</th>
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <% for(i=0;i<st.length;i++){ %>
+                                                                                                        <tr>
+                                                                                                            <td>
+                                                                                                                <%= i+1 %>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <%= st[i].award %>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                        <% } %>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            <% } %>
+                                                                                                <% } %>
+<hr>
+                     
+                    
+            </div>
+            
+        </div>
+        <div class="row">
+                <div class="col-md-4">
+                    <label class="control-label">
+                        Student's Comments
+                    </label>
+
                 </div>
-                            
-                <% if(result[0].mtbiParticipation != '1'){ %>
-                   
-                <% } %>
-                <% if(result[0].mtbiParticipation == '1'){ %>
-                    Yes
-                <% } %>
+                <div class="col-md-4">
+                    <%= result[0].extraInfo %>
+                </div>
+            </div>
+            <hr>
+        <form method="post" action="/directorSubmission">
+            <input type="hidden" id="studentId" name="studentId" value= <%= result[0].idNumber %> >
+            <input type="hidden" id="asurite" name="asurite" value= <%= result[0].asurite %> >
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label">
+            Please comment on the student's status
+        </label>
+        </div>
+        </div>
+        <div class="form-group pad">
+            <textarea class="form-control" id="directorComment" name="directorComment" rows="3" cols="100" placeholder="Enter your comments on the student's status"></textarea>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label class="control-label" for="studentProgressApproval">
+                    Do you approve the student's progress?
+                </label>
+            </div>
+            <div class="col-md-1">
+                    <label class="control-label" for="studentProgressApproval">
+                        Yes
+                    </label>
+                </div>
+                <div class="col-md-1">
+                    <input type="radio" id="studentProgressApprovalYes" name="studentProgressApproval" value="1" required>
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label"  for="studentProgressApproval">
+                        No
+                    </label>
+
+                </div>
+                <div class="col-md-1">
+                    <input type="radio" id="studentProgressApprovalNo" name="studentProgressApproval" value="0">
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+            <button id="submitDirectorComments" type="submit" class="btn btn-default">Submit</button>
             </div>
         </div>
+        </form>
+    </div>
 
 
     </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
 </body>
 
