@@ -1,0 +1,17 @@
+<html>
+    <title>MSMSC submission</title>
+    <head><center><h1>Thank you!</h1></center></head>
+    <script type="text/javascript">
+        window.history.forward();
+        function noBack()
+        {
+            window.history.forward();
+        }
+    </script>
+    <script type="text/javascript">
+        window.onbeforeunload = function() {
+            return "Dude, are you sure you want to leave? Think of the kittens!";
+        }
+    </script>
+    <body onLoad="noBack();" onpageshow="if (event.persisted) noBack();" onUnload=""><center> Your submission has been recorded. You may now close this window.</center></body>
+</html>

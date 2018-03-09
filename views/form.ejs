@@ -1059,7 +1059,7 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control" type="text" id="idNumber" name="idNumber" required>
+							<input class="form-control" type="text" id="idNumber" name="idNumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required>
 						</div>
 						<div class="col-md-2">
 							<label class="control-label" for="asurite">
@@ -1082,7 +1082,7 @@
 							</label>
 						</div>
 						<div class="col-md-2">
-							<input class="form-control" type="month" id="programStartDate" name="programStartDate" required>
+							<input class="form-control" type="date" id="programStartDate" name="programStartDate" required>
 						</div>
 						<div class="col-md-2">
 							<label class="control-label" for="asurite">
@@ -1109,7 +1109,7 @@
 							</label>	
 						</div>
 						<div class="col-md-2">
-							<input type="text" id="gpa" name="gpa" class="form-control" required>
+							<input type="number" step="0.01" id="gpa" name="gpa" class="form-control" required>
 						</div>
 					</div>
 				</div>
@@ -1205,6 +1205,7 @@
 					</div>
 
 				</div>
+				<hr>
 				<div class="row">
 					<div class="form-group pad">
 						<div class="col-md-4">
@@ -1286,7 +1287,7 @@
 						<div class="form-group pad">
 							<div class="col-md-5">
 								<label class="control-label" for="reasonAdvisoryCommittee">
-									Please specify reason for not having an AdvisoryCommittee
+									Please specify reason for not having an Advisory Committee
 									<sup class="star">*</sup>
 								</label>
 							</div>
@@ -1297,6 +1298,7 @@
 					</div>
 
 				</div>
+				<hr>
 				<div id="metChairDiv">
 					<div class="row">
 						<div class="form-group pad">
@@ -1415,6 +1417,7 @@
 						</fieldset>
 					</div>
 				</div>
+				<hr>
 				<div class="row">
 					<div class="form-group pad">
 						<div class="col-md-4">
@@ -1511,6 +1514,7 @@
 						</fieldset>
 					</div>
 				</div>
+				<hr>
 				<div class="row">
 					<div class="form-group pad">
 						<div class="col-md-4">
@@ -1617,7 +1621,7 @@
 
 					</div>
 				</div>
-
+				<hr>
 				<!-- Presentations begins here -->
 				<div class="row">
 					<div class="form-group pad">
@@ -1712,7 +1716,7 @@
 
 					</div>
 				</div>
-
+				<hr>
 				<div class="row">
 					<div class="form-group pad">
 						<div class="col-md-4">
@@ -1766,12 +1770,12 @@
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<!-- <button id="addCourse" onclick="add()">Add Course</button> -->
-							<button id="addConference" class="btn btn-success" onclick="addNewConference()" type="button"> Add Presentation </button>
+							<button id="addConference" class="btn btn-success" onclick="addNewConference()" type="button"> Add Conference </button>
 						</div>
 
 					</div>
 				</div>
-
+				<hr>
 				<div class="row">
 					<div class="form-group pad">
 						<div class="col-md-4">
@@ -1846,7 +1850,7 @@
 								<sup class="star">*</sup>
 							</label>
 						</div>
-					s</div>
+					</div>
 				</div>
 				<div class="form-group pad">
 					<textarea class="form-control" id="extraInfo" name="extraInfo" rows="3" cols="100" placeholder="Enter reason here"></textarea>

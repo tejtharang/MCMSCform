@@ -160,7 +160,8 @@ app.post("/addData",function(req,res){
     myData.save()
       .then(item => {
         console.log(req.body);
-        res.send("item saved to database");
+        //res.send("Thank you for submitting this form! You may now close this window");
+        res.render("submissionThanks.ejs");
         var mailOptions = {
           from: 'tharangd95@gmail.com',
           to: email,
