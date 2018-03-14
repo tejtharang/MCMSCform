@@ -262,10 +262,10 @@
 				console.log("Add presentation function reached");
 				var data1 = document.getElementById("presentationType").value;
 				var data2 = document.getElementById("presentationTitle").value;
-				var data3 = document.getElementById("presentationForum").value;
+				
 				var data4 = document.getElementById("otherPresentationType").value;
 				var error = false;
-				if(data1 === "" || data2 === "" || data3 === ""){
+				if(data1 === "" || data2 === ""){
 					error = true;
 					alert("Please fill in the presentation details properly");
 				}
@@ -282,10 +282,10 @@
 				}
 
 
-				$('#presentationsAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" + data3 + "</td><td>" +"<button type='button' class='removePresentation btn btn-danger' onclick='removePresentation()'>Delete</button>" +"</td></tr>");
+				$('#presentationsAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td>" +"<button type='button' class='removePresentation btn btn-danger' onclick='removePresentation()'>Delete</button>" +"</td></tr>");
 				$('#presentationType').val("");
 				$('#presentationTitle').val("");
-				$('#presentationForum').val("");
+				
 				$('#otherPresentationType').val("");
 				var table = document.getElementById("presentationsAddTable");
 				console.log(table);
@@ -300,7 +300,6 @@
 					listOfObjects.push({
 						type : att[0],
 						title : att[1],
-						forum : att[2]
 					});
 				}
 				for(var i = 0; i<listOfObjects.length; i++){
@@ -356,15 +355,17 @@
 			success : function(){
 				console.log("Add conference function reached");
 				var data1 = document.getElementById("conferenceName").value;
+				var data2 = document.getElementById("conferencesPresented").value;
+				console.log(data2);
 				var error = false;
-				if(data1 === ""){
+				if(data1 === "" || data2 === ""){
 					error = true;
 					alert("Please fill in the conference details properly");
 				}
 
 				if(!error){
 				
-				$('#conferencesAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + "<button type='button' class='removeConference btn btn-danger' onclick='removeConference()'>Delete</button>" +"</td></tr>");
+				$('#conferencesAddTable tbody:last').append("<tr><td>" + data1 + "</td><td>" + data2 + "</td><td><button type='button' class='removeConference btn btn-danger' onclick='removeConference()'>Delete</button>" +"</td></tr>");
 
 				$('#conferenceName').val(""); 
 				var table = document.getElementById("conferencesAddTable");
@@ -379,6 +380,7 @@
 					}
 					listOfObjects.push({
 						conference : att[0],
+						presented : att[1]
 						
 					});
 				}
@@ -778,7 +780,7 @@
 				$('#addPresentationRowDiv').show();
 				document.getElementById("presentationType").required=false;
 				document.getElementById("presentationTitle").required=false;
-				document.getElementById("presentationForum").required = false;
+				
 				document.getElementById("otherPresentationType").required=false;
 				if(document.getElementById("presentationType").value == "Other"){
 					$('#otherPresentationTypeDiv').show();
@@ -800,7 +802,7 @@
 				$('#addPresentationRowDiv').hide();
 				document.getElementById("presentationType").required=false;
 				document.getElementById("presentationTitle").required=false;
-				document.getElementById("presentationForum").required = false;
+				
 				document.getElementById("otherPresentationType").required=false;
 				$('#otherPresentationTypeDiv').hide();
 			},
@@ -892,38 +894,11 @@
 						<div class="col-md-4"> 
 							<select id="degree" class="form-control" name="degreeSelect" required>
 								<option value="initial" disabled selected="selected">Select a degree Program</option>
-								<%degrees = ["Applied Mathematics","Mathematics","Mathematics Education","Statistics"];%>
+								<%degrees = ["AMLSS"];%>
 								<%degrees.forEach(function(degree){%>
 								<option value=<%=degree%>><%=degree%></option>
 								<%});%>    						
 							</select>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="form-group pad">
-						<div class="col-md-4">
-							<label class="control-label" for="mastersInPassing">
-								Have you applied for Master's in Passing?
-								<sup class="star">*</sup>
-							</label>
-						</div>
-						<div class="col-md-1">
-							<label class="control-label" for="mastersInPassingYes">
-								Yes
-							</label>
-						</div>
-						<div class="col-md-1">
-							<input type="radio" id="mastersInPassingYes" name="mastersInPassing" value="1" required>
-						</div>
-						<div class="col-md-1">
-							<label class="control-label" for="mastersInPassingNo">
-								No
-							</label>
-
-						</div>
-						<div class="col-md-1">
-							<input type="radio" id="mastersInPassingNo" name="mastersInPassing" value="0">
 						</div>
 					</div>
 				</div>
@@ -1492,9 +1467,7 @@
 							<div class="col-md-2">
 								<select class="form-control" id="mtbiAnticipatedDateSession" name="mtbiAnticipatedDateSession">
 									<option value="" disabled selected="selected">--session--</option>
-									<option value="Spring">Spring</option>
 									<option value="Summer">Summer</option>
-									<option value="Fall">Fall</option>
 								</select>
 							</div>
 							<div class="col-md-1">
@@ -1654,7 +1627,7 @@
 					<tr>
 						<th class="col-md-3">Presentation</th>
 						<th class="col-md-3">Title</th>
-						<th class="col-md-3">Forum</th>
+						<th class="col-md-3">Action</th>
 					</tr>
 					<input type="hidden" name="presentationAddTableHiddenInput" id="presentationAddTableHiddenInput" value=""	/>
 				</table>
@@ -1684,14 +1657,7 @@
 						<div class="col-md-2">
 							<input type="text" id="presentationTitle" class="form-control" name="presentationTitle"> 
 						</div>
-						<div class="col-md-2">
-							<label class="control-label" for="presenationForum">
-								Forum
-							</label>
-						</div>
-						<div class="col-md-2">
-							<input type="text" id="presentationForum" class="form-control" name="presentationForum">
-						</div>
+						
 					</div>
 					
 				</div>
@@ -1747,11 +1713,13 @@
 				<table class="table table-hover pad" id="conferencesAddTable" name="conferencesAddTable">
 					<tr>
 						<th class="col-md-3">Conference Name</th>
+						<th class="col-md-3">Presented here</th>
 						<th class="col-md-2">Action</th>
 					</tr>
 					<input type="hidden" name="conferenceAddTableHiddenInput" id="conferenceAddTableHiddenInput" value=""	/>
 				</table>
-				<div class="row" id="addConferenceRowDiv" style="display:none;">
+				<div id="addConferenceRowDiv" style="display:none;">
+				<div class="row">
 					<div class="form-group pad">
 						<div class="col-md-2">
 							<label class="control-label" for="conferenceName">
@@ -1765,6 +1733,26 @@
 					</div>
 					
 				</div>
+				<div class="row">
+					<div class="form-group pad">
+						<div class="col-md-4">
+							<label class="control-label" for="conferences">
+								Did you present at this conference?
+							</label>
+						</div>
+						<div class="col-md-2">
+							<select id="conferencesPresented" class="form-control" name="conferencesPresented">
+								<option value="" disabled selected="selected">--select--</option>
+								<option value="Yes">Yes</option>
+								<option value="No">No</option>
+							</select>	
+						</div>
+
+					</div>
+
+				</div>	
+				
+				</div>	
 				
 				<div class="row" id="addConferenceButton" style="display:none;">
 					<div class="form-group pad">

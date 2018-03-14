@@ -102,19 +102,6 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="control-label">Master's in passing</label>
-                    </div>
-                    <div class="col-md-4">
-                        <% if(result[0].mastersInPassing == '0'){ %>
-                            No
-                            <% } %>
-                                <% if(result[0].mastersInPassing == '1'){ %>
-                                    Yes
-                                    <% } %>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
                         <label class="control-label">Graduating this year</label>
                     </div>
                     <div class="col-md-4">
@@ -448,7 +435,7 @@
                                                                                 <tr>
                                                                                     <th scope="col">Type</th>
                                                                                     <th scope="col">Title</th>
-                                                                                    <th scope="col">Forum</th>
+                                                                                    
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -460,9 +447,7 @@
                                                                                         <td>
                                                                                             <%= st[i].title %>
                                                                                         </td>
-                                                                                        <td>
-                                                                                            <%= st[i].forum %>
-                                                                                        </td>
+                                                                                        
                                                                                     </tr>
                                                                                     <% } %>
                                                                             </tbody>
@@ -495,6 +480,7 @@
                                                                                                     <tr>
                                                                                                         <th scope="col">S.No</th>
                                                                                                         <th scope="col">Conference</th>
+                                                                                                        <th scope="col">Presented</th>
                                                                                                     </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
@@ -505,6 +491,9 @@
                                                                                                             </td>
                                                                                                             <td>
                                                                                                                 <%= st[i].conference %>
+                                                                                                            </td>
+                                                                                                            <td>
+                                                                                                                <%= st[i].presented %>
                                                                                                             </td>
                                                                                                         </tr>
                                                                                                         <% } %>

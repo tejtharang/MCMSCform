@@ -17,7 +17,6 @@ var url = "mongodb://localhost:27017/mcmsc";
 mongoose.connect("mongodb://localhost:27017/mcmsc");
 var schema = new mongoose.Schema({
 	degreeSelect : String,
-	mastersInPassing : String,
 	graduation : String,
 	emailExtra : String,
 	firstName : String,
