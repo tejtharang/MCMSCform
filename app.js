@@ -153,12 +153,13 @@ app.get("/adminView",function(req,res){
 //Defining database schema
 app.post("/addData",function(req,res){
 	var myData = req.body;
-	console.log(req.body);
   var myData = new Student(req.body);
   var email = req.body.asurite + '@asu.edu';
+  var memberDetails = JSON.parse(req.body.memberAddTableHiddenInput);
+  console.log(memberDetails);
     myData.save()
       .then(item => {
-        console.log(req.body);
+        
         //res.send("Thank you for submitting this form! You may now close this window");
         res.render("submissionThanks.ejs");
         var mailOptions = {
@@ -171,9 +172,31 @@ app.post("/addData",function(req,res){
           if (error) {
             console.log(error);
           } else {
+            console.log("t1");
             console.log('Email sent: ' + info.response);
           }
         });
+        console.log("t222");
+        for(var i = 0;i<memberDetails.length;i++){
+          console.log("t333");
+        var emailtext = req.body.firstName + " " + req.body.lastName + " has submitted the MCMSC progress form and has listed you as " + memberDetails[i].memberPosition + " of the advisory committee." + "\n ASU ID: " + req.body.idNumber + "\n" + "Asurite : " + req.body.asurite;  
+        console.log(emailtext);
+        var mailOptions = {
+          from: 'tharangd95@gmail.com',
+          to : memberDetails[i].memberEmail,
+          subject : 'MCMSC form submission',
+          text : emailtext
+        };
+        console.log("email id is :");
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("t2");
+            console.log('Email sent: ' + info.response);
+          }
+        });
+        }
       })
       .catch(err => {
         res.status(400).send("unable to save to database");
@@ -181,10 +204,6 @@ app.post("/addData",function(req,res){
     Student.find({},function(err,students){
       if(err){
         console.log(err);
-      }
-      else{
-        console.log("123");
-        console.log(students);
       }
     });
 });
