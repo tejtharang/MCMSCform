@@ -1,5 +1,6 @@
 var express = require("express");
 var app = express();
+var session = require("express-session");
 var bodyParser = require('body-parser');
 // setting up node email
 var nodemailer = require('nodemailer');
@@ -67,12 +68,104 @@ var schema = new mongoose.Schema({
   acceptance: String
 });
 var Student = mongoose.model("Student",schema);
+var userSchema = new mongoose.Schema({
+    username : String,
+    password : String
+});
+userSchema.methods.validPassword = function( pwd ) {
+  // EXAMPLE CODE!
+  return ( this.password === pwd );
+};
+var User = mongoose.model("User",userSchema);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
+
 app.set("view engine","ejs");
 
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+app.use(session({secret : 'anything'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+//revalidate when back button is clicked 
+app.get("/logout",function(req,res){
+  req.logout();
+  res.redirect('/adminLogin');
+});
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+//checks if admin pages are all authenticated
+function requireLogin(req, res, next) {
+  console.log(req.user);
+  if (req.user) {
+    console.log("hits here");
+    next(); // allow the next route to run
+  } else {
+    console.log("hits here 2");
+    // require the user to log in
+    res.redirect("/adminLogin"); // or render a form, etc.
+  }
+}
+
+app.get('/adminLogin',function(req,res){
+  res.render("adminLogin.ejs");
+})
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/admin/adminView',
+                                   session : true,
+                                   failureRedirect: '/login',
+                                   failureFlash: true }),                             
+);
+
+app.all("/admin/*", requireLogin, function(req, res, next) {
+  
+  next(); // if the middleware allowed us to get here,
+          // just move on to the next route handler
+});
+// code for fetching all data from a mongo database
+app.get("/admin/adminView",function(req,res){
+  mongoClient.connect(url,function(err,db){
+    if (err) throw err;
+    var dbo = db.db("mcmsc");
+    dbo.collection("students").find({}).toArray(function(err,result){
+      if (err) throw err;
+      for(i=0;i<result.length;i++){
+        console.log(result[i].firstName);
+      }
+      console.log("I am here");
+      console.log(result);
+      app.locals.result = result;
+      res.render("adminView.ejs");
+      db.close();
+    });
+  });
+})
+
 //director submission
-app.post("/directorSubmission",function(req,res){
+app.post("/admin/directorSubmission",function(req,res){
   console.log(req.body);
   mongoClient.connect(url, function(err, db) {
     if (err) throw err;
@@ -93,7 +186,7 @@ app.post("/directorSubmission",function(req,res){
     dbo.collection("students").updateOne(myquery, newvalues, function(err, result) {
       if (err) throw err;
       console.log("1 document updated");
-      res.redirect("/adminView");
+      res.redirect("/admin/adminView");
       var mailOptions = {
         from: 'tharangd95@gmail.com',
         to: email,
@@ -114,7 +207,7 @@ app.post("/directorSubmission",function(req,res){
   
 });
 // individual student data from adminView
-app.get("/adminView/:idno",function(req,res){
+app.get("/admin/adminView/:idno",function(req,res){
   var id = req.params.idno;
   mongoClient.connect(url,function(err,db){
     console.log("coming here");
@@ -132,23 +225,9 @@ app.get("/adminView/:idno",function(req,res){
   });
 });
 
-// code for fetching all data from a mongo database
-app.get("/adminView",function(req,res){
-  mongoClient.connect(url,function(err,db){
-    if (err) throw err;
-    var dbo = db.db("mcmsc");
-    dbo.collection("students").find({}).toArray(function(err,result){
-      if (err) throw err;
-      for(i=0;i<result.length;i++){
-        console.log(result[i].firstName);
-      }
-      app.locals.result = result;
-      res.render("adminView.ejs");
-      db.close();
-    });
-  });
-})
 
+// Automatically apply the `requireLogin` middleware to all
+// routes starting with `/admin`
 
 //Defining database schema
 app.post("/addData",function(req,res){
