@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var session = require("express-session");
 var bodyParser = require('body-parser');
+var flash = require('connect-flash');
 // setting up node email
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
@@ -81,7 +82,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
 app.set("view engine","ejs");
+app.use(session({secret : 'anything'}));
 
+app.use(flash());
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
@@ -99,9 +102,10 @@ passport.use(new LocalStrategy(
     });
   }
 ));
-app.use(session({secret : 'anything'}));
+
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 //revalidate when back button is clicked 
 app.get("/logout",function(req,res){
@@ -130,15 +134,24 @@ function requireLogin(req, res, next) {
   }
 }
 
-app.get('/adminLogin',function(req,res){
-  res.render("adminLogin.ejs");
-})
 app.post('/login',
   passport.authenticate('local', { successRedirect: '/admin/adminView',
                                    session : true,
-                                   failureRedirect: '/login',
-                                   failureFlash: true }),                             
+                                   failureRedirect: '/failedAuthentication',
+                                   failureFlash : "Incorrect Username or Password"
+                                   }),                             
 );
+
+app.get('/failedAuthentication',function(req,res){
+  req.flash('message', 'Please check your email to confirm it.');
+  req.session.save(function () {
+  res.render('adminLogin.ejs');
+});
+});
+app.get('/adminLogin',function(req,res){
+  res.render("adminLogin.ejs");
+})
+
 
 app.all("/admin/*", requireLogin, function(req, res, next) {
   
@@ -235,7 +248,7 @@ app.post("/addData",function(req,res){
   var myData = new Student(req.body);
   var email = req.body.asurite + '@asu.edu';
   var memberDetails = JSON.parse(req.body.memberAddTableHiddenInput);
-  console.log(memberDetails);
+  
     myData.save()
       .then(item => {
         
