@@ -18,27 +18,27 @@ mongoose.Promise = global.Promise;
 var url = "mongodb://localhost:27017/mcmsc";
 mongoose.connect("mongodb://localhost:27017/mcmsc");
 var schema = new mongoose.Schema({
-	degreeSelect : String,
-	graduation : String,
-	emailExtra : String,
-	firstName : String,
-	lastName : String,
-	idNumber : String,
-	asurite : String,
-	programStartDate : String,
-	currentSemester : String,
-	gpa : String,
-	coursesAdd : String,
-	courseAddTableHiddenInput : String,
-	courseName : String,
-	courseGrade : String,
-	reasonCourse : String,
-	membersAdd : String,
-	memberAddTableHiddenInput : String,
-	memberName : String,
-	memberEmail : String,
-	reasonAdvisoryCommittee : String,
-	metChair: String,
+  degreeSelect: String,
+  graduation: String,
+  emailExtra: String,
+  firstName: String,
+  lastName: String,
+  idNumber: String,
+  asurite: String,
+  programStartDate: String,
+  currentSemester: String,
+  gpa: String,
+  coursesAdd: String,
+  courseAddTableHiddenInput: String,
+  courseName: String,
+  courseGrade: String,
+  reasonCourse: String,
+  membersAdd: String,
+  memberAddTableHiddenInput: String,
+  memberName: String,
+  memberEmail: String,
+  reasonAdvisoryCommittee: String,
+  metChair: String,
   reasonNotMetChair: String,
   prospectusDefenseCompleted: String,
   prospectusAnticipatedDateSession: String,
@@ -47,7 +47,7 @@ var schema = new mongoose.Schema({
   mtbiParticipationYear: String,
   mtbiParticipationRole: String,
   mtbiAnticipatedDateSession: String,
-  mtbiAnticipatedDateYear:String,
+  mtbiAnticipatedDateYear: String,
   publicationsExist: String,
   publicationAddTableHiddenInput: String,
   publicationName: String,
@@ -68,29 +68,29 @@ var schema = new mongoose.Schema({
   extraInfo: String,
   acceptance: String
 });
-var Student = mongoose.model("Student",schema);
+var Student = mongoose.model("Student", schema);
 var userSchema = new mongoose.Schema({
-    username : String,
-    password : String
+  username: String,
+  password: String
 });
-userSchema.methods.validPassword = function( pwd ) {
+userSchema.methods.validPassword = function (pwd) {
   // EXAMPLE CODE!
-  return ( this.password === pwd );
+  return (this.password === pwd);
 };
-var User = mongoose.model("User",userSchema);
-app.use(bodyParser.urlencoded({extended:true}));
+var User = mongoose.model("User", userSchema);
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-app.set("view engine","ejs");
-app.use(session({secret : 'anything'}));
+app.set("view engine", "ejs");
+app.use(session({ secret: 'anything' }));
 
 app.use(flash());
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function(err, user) {
+  function (username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
       if (err) { return done(err); }
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
@@ -108,16 +108,16 @@ app.use(passport.session());
 
 
 //revalidate when back button is clicked 
-app.get("/logout",function(req,res){
+app.get("/logout", function (req, res) {
   req.logout();
   res.redirect('/adminLogin');
 });
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser(function (user, done) {
   done(null, user);
 });
 
@@ -135,37 +135,38 @@ function requireLogin(req, res, next) {
 }
 
 app.post('/login',
-  passport.authenticate('local', { successRedirect: '/admin/adminView',
-                                   session : true,
-                                   failureRedirect: '/failedAuthentication',
-                                   failureFlash : "Incorrect Username or Password"
-                                   }),                             
+  passport.authenticate('local', {
+    successRedirect: '/admin/adminView',
+    session: true,
+    failureRedirect: '/failedAuthentication',
+    failureFlash: "Incorrect Username or Password"
+  }),
 );
 
-app.get('/failedAuthentication',function(req,res){
+app.get('/failedAuthentication', function (req, res) {
   req.flash('message', 'Please check your email to confirm it.');
   req.session.save(function () {
-  res.render('adminLogin.ejs');
+    res.render('adminLogin.ejs');
+  });
 });
-});
-app.get('/adminLogin',function(req,res){
+app.get('/adminLogin', function (req, res) {
   res.render("adminLogin.ejs");
 })
 
 
-app.all("/admin/*", requireLogin, function(req, res, next) {
-  
+app.all("/admin/*", requireLogin, function (req, res, next) {
+
   next(); // if the middleware allowed us to get here,
-          // just move on to the next route handler
+  // just move on to the next route handler
 });
 // code for fetching all data from a mongo database
-app.get("/admin/adminView",function(req,res){
-  mongoClient.connect(url,function(err,db){
+app.get("/admin/adminView", function (req, res) {
+  mongoClient.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db("mcmsc");
-    dbo.collection("students").find({}).toArray(function(err,result){
+    dbo.collection("students").find({}).toArray(function (err, result) {
       if (err) throw err;
-      for(i=0;i<result.length;i++){
+      for (i = 0; i < result.length; i++) {
         console.log(result[i].firstName);
       }
       console.log("I am here");
@@ -178,25 +179,24 @@ app.get("/admin/adminView",function(req,res){
 })
 
 //director submission
-app.post("/admin/directorSubmission",function(req,res){
+app.post("/admin/directorSubmission", function (req, res) {
   console.log(req.body);
-  mongoClient.connect(url, function(err, db) {
+  mongoClient.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db("mcmsc");
-    var myquery = { idNumber : req.body.studentId };
+    var myquery = { idNumber: req.body.studentId };
     var email = req.body.asurite + "@asu.edu";
     console.log(email);
-    
+
     var msg = "";
-    if(req.body.studentProgressApproval == '1')
-    {
+    if (req.body.studentProgressApproval == '1') {
       msg = "Your MCMSC form has been approved by the director";
     }
-    else{
-      msg = "Your MCMSC form has been rejected by the director.\n" + "Director's comments: " + req.body.directorComment  + ".\nPlease schedule an appointment with the director as soon as possible. Thank you"
+    else {
+      msg = "Your MCMSC form has been rejected by the director.\n" + "Director's comments: " + req.body.directorComment + ".\nPlease schedule an appointment with the director as soon as possible. Thank you"
     }
-    var newvalues = { $set: {directorComment : req.body.directorComment, directorApproval: req.body.studentProgressApproval } };
-    dbo.collection("students").updateOne(myquery, newvalues, function(err, result) {
+    var newvalues = { $set: { directorComment: req.body.directorComment, directorApproval: req.body.studentProgressApproval } };
+    dbo.collection("students").updateOne(myquery, newvalues, function (err, result) {
       if (err) throw err;
       console.log("1 document updated");
       res.redirect("/admin/adminView");
@@ -206,7 +206,7 @@ app.post("/admin/directorSubmission",function(req,res){
         subject: 'MCMSC form submission',
         text: msg
       };
-      transporter.sendMail(mailOptions, function(error, info){
+      transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log(error);
         } else {
@@ -215,18 +215,18 @@ app.post("/admin/directorSubmission",function(req,res){
       });
       db.close();
     });
-   
+
   });
-  
+
 });
 // individual student data from adminView
-app.get("/admin/adminView/:idno",function(req,res){
+app.get("/admin/adminView/:idno", function (req, res) {
   var id = req.params.idno;
-  mongoClient.connect(url,function(err,db){
+  mongoClient.connect(url, function (err, db) {
     console.log("coming here");
     if (err) throw err;
     var dbo = db.db("mcmsc");
-    dbo.collection("students").find({idNumber : id}).toArray(function(err,result){
+    dbo.collection("students").find({ idNumber: id }).toArray(function (err, result) {
       if (err) throw err;
       app.locals.result = result;
       console.log(result[0]);
@@ -243,13 +243,19 @@ app.get("/admin/adminView/:idno",function(req,res){
 // routes starting with `/admin`
 
 //Defining database schema
-app.post("/addData",function(req,res){
-	var myData = req.body;
+app.post("/addData", function (req, res) {
+  var id = req.body.idNumber;
+  console.log(id);
+  var myData = req.body;
   var myData = new Student(req.body);
   var email = req.body.asurite + '@asu.edu';
-  var memberDetails = JSON.parse(req.body.memberAddTableHiddenInput);
-  
-    myData.save()
+  var flag = false;
+  if (req.body.memberAddTableHiddenInput != "") {
+
+    flag = true;
+    var memberDetails = JSON.parse(req.body.memberAddTableHiddenInput);
+  }
+  /*  myData.save()
       .then(item => {
         
         //res.send("Thank you for submitting this form! You may now close this window");
@@ -289,21 +295,121 @@ app.post("/addData",function(req,res){
           }
         });
         }
-      })
-      .catch(err => {
-        res.status(400).send("unable to save to database");
-      });
-    Student.find({},function(err,students){
-      if(err){
-        console.log(err);
+      }) */
+  mongoClient.connect(url, function (err, db) {
+    console.log("coming here");
+    if (err) throw err;
+    var dbo = db.db("mcmsc");
+    dbo.collection("students").updateMany({ idNumber: id }, {
+      $set: {
+        degreeSelect: req.body.degreeSelect,
+        graduation: req.body.graduation,
+        emailExtra: req.body.emailExtra,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        idNumber: req.body.idNumber,
+        asurite: req.body.asurite,
+        programStartDate: req.body.programStartDate,
+        currentSemester: req.body.currentSemester,
+        gpa: req.body.gpa,
+        coursesAdd: req.body.coursesAdd,
+        courseAddTableHiddenInput: req.body.courseAddTableHiddenInput,
+        courseName: req.body.courseName,
+        courseGrade: req.body.courseGrade,
+        reasonCourse: req.body.reasonCourse,
+        membersAdd: req.body.membersAdd,
+        memberAddTableHiddenInput: req.body.memberAddTableHiddenInput,
+        memberName: req.body.memberName,
+        memberEmail: req.body.memberEmail,
+        reasonAdvisoryCommittee: req.body.reasonAdvisoryCommittee,
+        metChair: req.body.metChair,
+        reasonNotMetChair: req.body.reasonNotMetChair,
+        prospectusDefenseCompleted: req.body.prospectusDefenseCompleted,
+        prospectusAnticipatedDateSession: req.body.prospectusAnticipatedDateSession,
+        prospectusAnticipatedDateYear: req.body.prospectusAnticipatedDateYear,
+        mtbiParticipation: req.body.mtbiParticipation,
+        mtbiParticipationYear: req.body.mtbiParticipationYear,
+        mtbiParticipationRole: req.body.mtbiParticipationRole,
+        mtbiAnticipatedDateSession: req.body.mtbiAnticipatedDateSession,
+        mtbiAnticipatedDateYear: req.body.mtbiAnticipatedDateYear,
+        publicationsExist: req.body.publicationsExist,
+        publicationAddTableHiddenInput: req.body.publicationAddTableHiddenInput,
+        publicationName: req.body.publicationName,
+        journalName: req.body.journalName,
+        publicationUrl: req.body.publicationUrl,
+        publicationDoi: req.body.publicationDoi,
+        presentationsExist: req.body.presentationsExist,
+        presentationAddTableHiddenInput: req.body.presentationAddTableHiddenInput,
+        presentationTitle: req.body.presentationTitle,
+        presentationForum: req.body.presentationForum,
+        otherPresentationType: req.body.otherPresentationType,
+        conferencesExist: req.body.conferencesExist,
+        conferenceAddTableHiddenInput: req.body.conferenceAddTableHiddenInput,
+        conferenceName: req.body.conferenceName,
+        awardsExist: req.body.awardsExist,
+        awardAddTableHiddenInput: req.body.awardAddTableHiddenInput,
+        awardName: req.body.awardName,
+        extraInfo: req.body.extraInfo,
+        acceptance: req.body.acceptance
       }
-    });
+    }, { upsert: true, safe: false },
+      function (err, data) {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          console.log("no error");
+
+
+          //res.send("Thank you for submitting this form! You may now close this window");
+          res.render("submissionThanks.ejs");
+          var mailOptions = {
+            from: 'tharangd95@gmail.com',
+            to: email,
+            subject: 'MCMSC form submission',
+            text: 'Thank you for submitting the form!'
+          };
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("t1");
+              console.log('Email sent: ' + info.response);
+            }
+          });
+          console.log("t222");
+          if (flag)
+            for (var i = 0; i < memberDetails.length; i++) {
+              console.log("t333");
+              var emailtext = req.body.firstName + " " + req.body.lastName + " has submitted the MCMSC progress form and has listed you as " + memberDetails[i].memberPosition + " of the advisory committee." + "\n ASU ID: " + req.body.idNumber + "\n" + "Asurite : " + req.body.asurite;
+              console.log(emailtext);
+              var mailOptions = {
+                from: 'tharangd95@gmail.com',
+                to: memberDetails[i].memberEmail,
+                subject: 'MCMSC form submission',
+                text: emailtext
+              };
+              console.log("email id is :");
+              transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log("t2");
+                  console.log('Email sent: ' + info.response);
+                }
+              });
+            }
+        }
+      });
+  });
+});
+app.get("/form",function(req,res){
+  res.render("form.ejs");
+});
+app.get("*", function (req, res) {
+  res.render("initial.ejs");
 });
 
-app.get("*",function(req,res){
-	res.render("form.ejs");
-});
-
-app.listen(3000,"localhost",function(){
-	console.log("connected!");
+app.listen(3000, "localhost", function () {
+  console.log("connected!");
 });
