@@ -17,6 +17,8 @@ var mongoClient = require("mongodb").MongoClient;
 mongoose.Promise = global.Promise;
 var url = "mongodb://localhost:27017/mcmsc";
 mongoose.connect("mongodb://localhost:27017/mcmsc");
+var failed = false;
+app.locals.failed = failed;
 var schema = new mongoose.Schema({
   degreeSelect: String,
   graduation: String,
@@ -106,7 +108,6 @@ passport.use(new LocalStrategy(
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 //revalidate when back button is clicked 
 app.get("/logout", function (req, res) {
   req.logout();
@@ -144,13 +145,19 @@ app.post('/login',
 );
 
 app.get('/failedAuthentication', function (req, res) {
-  req.flash('message', 'Please check your email to confirm it.');
+  
+  
   req.session.save(function () {
-    res.render('adminLogin.ejs');
+  res.render('adminLogin.ejs',{
+    failed : true
   });
+  });
+  
 });
 app.get('/adminLogin', function (req, res) {
-  res.render("adminLogin.ejs");
+  res.render("adminLogin.ejs",{
+    failed: false
+  });
 })
 
 
