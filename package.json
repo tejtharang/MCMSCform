@@ -4,7 +4,8 @@
   "description": "This a form being developed for MCMSC, ASU",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -18,9 +19,12 @@
   "homepage": "https://github.com/tejtharang/MCMSCform#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cas-authentication": "0.0.8",
     "connect-flash": "^0.1.1",
+    "decache": "^4.4.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "express-https-redirect": "^1.0.0",
     "express-session": "^1.15.6",
     "mongoose": "^5.0.7",
     "nodemailer": "^4.6.2",

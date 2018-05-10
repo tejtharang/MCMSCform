@@ -147,15 +147,15 @@
                         <label class="control-label">Courses</label>
                     </div>
                     <div class="col-md-4">
-                        <% if(result[0].coursesAdd != 'on'){ %>
+                        <% if(result[0].courseAddTableHiddenInput == ''){ %>
                             Not taken
                             <% } %>
-                                <% if(result[0].coursesAdd == 'on'){ %>
+                                <% if(result[0].courseAddTableHiddenInput != ''){ %>
                                     Yes
                                     <% } %>
                     </div>
                 </div>
-                <% if(result[0].coursesAdd != 'on'){ %>
+                <% if(result[0].courseAddTableHiddenInput == ''){ %>
 
                     <div class="row">
                         <div class="col-md-4">
@@ -206,14 +206,14 @@
                                                     <label class="control-label">Advisory Committee</label>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <% if(result[0].membersAdd != 'on'){ %>
+                                                    <% if(result[0].memberAddTableHiddenInput == ''){ %>
                                                         Not taken
                                                         <% } %>
-                                                            <% if(result[0].membersAdd == 'on'){ %>
+                                                            <% if(result[0].memberAddTableHiddenInput != ''){ %>
                                                                 Yes
                                                                 <% } %>
                                                 </div>
-                                                <% if(result[0].membersAdd != 'on'){ %>
+                                                <% if(result[0].memberAddTableHiddenInput == ''){ %>
                                                     <div class="col-md-4">
                                                         <div class="row">
                                                             <div class="col-md-4">

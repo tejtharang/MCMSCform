@@ -28,7 +28,7 @@
 <script type="text/javascript">
 	function addNewCourse(){
 		$.ajax({
-			url : "http://localhost:3000",
+			url : "https://mathesis.asu.edu:3000",
 			type : 'GET',
 			success : function() {
 				console.log("reached here");
@@ -94,7 +94,7 @@
 <script>
 	function removeCourse(){
 		$.ajax({
-			url : "http://localhost:3000",
+			url : "https://mathesis.asu.edu:3000",
 			type : 'GET',
 			success : function() {
 				$('.removeCourse').click(function(){console.log($(this).parent().parent().remove())});    	        	    
@@ -111,7 +111,7 @@
 <script type="text/javascript">
 	function addMember(){
 		$.ajax({
-			url : "http://localhost:3000",
+			url : "https://mathesis.asu.edu:3000",
 			type : 'GET',
 			success : function() {
 				console.log("reached here");
@@ -161,7 +161,7 @@
 <script>
 	function removeMember(){
 		$.ajax({
-			url : "http://localhost:3000",
+			url : "https://mathesis.asu.edu:3000",
 			type : 'GET',
 			success : function() {
 				$('.removeMember').click(function(){console.log($(this).parent().parent().remove())});    	        	    
@@ -178,7 +178,7 @@
 <script>
 	function addNewPublication(){
 		$.ajax({
-			url : "http://localhost:3000",
+			url : "https://mathesis.asu.edu:3000",
 			type : 'GET',
 			success : function(){
 				console.log("add publication function reached");
@@ -242,7 +242,7 @@
 <script>
 	function removePublication(){
 		$.ajax({
-			url : "http://localhost:3000",
+			url : "https://mathesis.asu.edu:3000",
 			type : 'GET',
 			success:function(){
 				$('.removePublication').click(function(){console.log($(this).parent().parent().remove())});
@@ -256,7 +256,7 @@
 <script>
 	function addNewPresentation(){
 		$.ajax({
-			url : "http://localhost:3000",
+			url : "https://mathesis.asu.edu:3000",
 			type : 'GET',
 			success : function(){
 				console.log("Add presentation function reached");
@@ -314,7 +314,7 @@
 <script>
 	function removePresentation(){
 		$.ajax({
-			url : "http://localhost:3000",
+			url : "https://mathesis.asu.edu:3000",
 			type:'GET',
 			success : function(){
 				console.log("Remove Presentation function reached");
@@ -329,7 +329,7 @@
 <script>
 	function displayOtherPresentationType(){
 		$.ajax({
-			url : "http://localhost:3000",
+			url : "https://mathesis.asu.edu:3000",
 			type : 'GET',
 			success : function(){
 				console.log("enters here");
@@ -350,7 +350,7 @@
 <script>
 	function addNewConference(){
 		$.ajax({
-			url :'http://localhost:3000',
+			url :'https://mathesis.asu.edu:3000',
 			type : 'GET',
 			success : function(){
 				console.log("Add conference function reached");
@@ -399,7 +399,7 @@
 <script>
 	function removeConference(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success : function(){
 				console.log("remove conference enters here");
@@ -414,7 +414,7 @@
 <script>
 	function addNewAward(){
 		$.ajax({
-			url :'http://localhost:3000',
+			url :'https://mathesis.asu.edu:3000',
 			type : 'GET',
 			success : function(){
 				console.log("Add conference function reached");
@@ -459,7 +459,7 @@
 <script>
 	function removeAward(){
 		$.ajax({
-			url:"http://localhost:3000",
+			url:"https://mathesis.asu.edu:3000",
 			type:'GET',
 			success:function(){
 				console.log("remove award enters here");
@@ -474,7 +474,7 @@
 <script>
 	function displayEmployment(){
 		$.ajax({
-			url:"http://localhost:3000",
+			url:"https://mathesis.asu.edu:3000",
 			type:'GET',
 			success:function(){
 				$('#sectionADiv').show();
@@ -492,7 +492,7 @@
 <script>
 	function displaySectionABC(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#sectionADiv').show();
@@ -525,7 +525,7 @@
 <script>
 	function displayAddNewCourseDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addCourseRowDiv').show();
@@ -541,7 +541,7 @@
 <script>
 	function displayNoCourseReasonDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addCourseRowDiv').hide();
@@ -557,7 +557,7 @@
 <script>
 	function displayMembersAddDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addMemberRowDiv').show();
@@ -573,7 +573,7 @@
 <script>
 	function displayNoAdvisoryCommitteeReasonDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addMemberRowDiv').hide();
@@ -589,7 +589,7 @@
 <script>
 	function displayNotMetChairReasonDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				
@@ -605,7 +605,7 @@
 <script>
 	function metWithChair(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				
@@ -621,7 +621,7 @@
 <script>
 	function displayAnticipatedProspectusDefenseDate(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				
@@ -638,7 +638,7 @@
 <script>
 	function hideAnticipatedProspectusDefenseDate(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				
@@ -655,7 +655,7 @@
 <script>
 	function displayAnticipatedDateOfMtbiParticipationDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#yearOfMtbiParticipationDiv').hide();
@@ -674,7 +674,7 @@
 <script>
 	function displayYearOfMtbiParticipationDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#yearOfMtbiParticipationDiv').show();
@@ -693,7 +693,7 @@
 <script>
 	function displayAddPublicationRowDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addPublicationRowDiv').show();
@@ -716,7 +716,7 @@
 <script>
 	function hideAddPublicationRowDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addPublicationRowDiv').hide();
@@ -738,7 +738,7 @@
 <script>
 	function displayUrlDoi(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				console.log("hello1");
@@ -773,7 +773,7 @@
 <script>
 	function displayAddPresentationRowDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addPresentationButton').show();
@@ -795,7 +795,7 @@
 <script>
 	function hideAddPresentationRowDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addPresentationButton').hide();
@@ -815,7 +815,7 @@
 <script>
 	function displayAddConferenceRowDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addConferenceRowDiv').show();
@@ -831,7 +831,7 @@
 <script>
 	function hideAddConferenceRowDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addConferenceRowDiv').hide();
@@ -847,7 +847,7 @@
 <script>
 	function displayAddAwardRowDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addAwardRowDiv').show();
@@ -863,7 +863,7 @@
 <script>
 	function hideAddAwardRowDiv(){
 		$.ajax({
-			url:'http://localhost:3000',
+			url:'https://mathesis.asu.edu:3000',
 			type:'GET',
 			success:function(){
 				$('#addAwardRowDiv').hide();

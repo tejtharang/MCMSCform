@@ -1,23 +1,48 @@
 var express = require("express");
+//major change here 
+var fs = require('fs');
+var privateKey = fs.readFileSync('/etc/apache2/sites-available/ssl-certs/mathesis.asu.edu.key','utf8');
+var certificate = fs.readFileSync('/etc/apache2/sites-available/ssl-certs/mathesis_asu_edu_cert.cer','utf8');
+var credentials = {key:privateKey, cert:certificate};
 var app = express();
+//till here
 var session = require("express-session");
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 // setting up node email
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: 'tharangd95@gmail.com',
-    pass: 'tanicky9596'
-  }
+			service: 'Gmail',
+            auth: {
+                user: 'tharangd95@gmail.com',
+                pass : 'tanicky9596'
+            },
+        });
+
+//var transporter = nodemailer.createTransport('smtps://tdandala@asu.edu:Euphoria95@smtp.gmail.com');
+var CASAuthentication = require('cas-authentication');
+ 
+var cas = new CASAuthentication({
+    cas_url         : 'https://weblogin.asu.edu/cas/',
+    service_url     : 'https://mathesis.asu.edu:3000',
+    cas_version     : '2.0',
+    renew           : false,
+    is_dev_mode     : false,
+    dev_mode_user   : '',
+    dev_mode_info   : {},
+    session_name    : 'cas_user',
+    session_info    : 'cas_userinfo',
+    destroy_session : false
 });
 var mongoose = require("mongoose");
 var mongoClient = require("mongodb").MongoClient;
 mongoose.Promise = global.Promise;
-var url = "mongodb://localhost:27017/mcmsc";
-mongoose.connect("mongodb://localhost:27017/mcmsc");
+var url = "mongodb://127.0.0.1:27017/mcmsc";
+mongoose.connect("mongodb://127.0.0.1:27017/mcmsc");
+//var url = "mongodb://${admin}:${ra!nb0w}@${127.0.0.1:27017}/${mcmsc}";
+//mongoose.connect("mongodb://${admin}:${ra!nb0w}@${127.0.0.1:27017}/${mcmsc}",{uri_decode_auth: true});
 var failed = false;
+
 app.locals.failed = failed;
 var schema = new mongoose.Schema({
   degreeSelect: String,
@@ -70,6 +95,10 @@ var schema = new mongoose.Schema({
   extraInfo: String,
   acceptance: String
 });
+
+//
+var httpsRedirect = require('express-https-redirect');
+//
 var Student = mongoose.model("Student", schema);
 var userSchema = new mongoose.Schema({
   username: String,
@@ -84,7 +113,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.set("view engine", "ejs");
-app.use(session({ secret: 'anything' }));
+app.use(session({ secret: 'anything', resave: true,saveUninitialized: true }));
 
 app.use(flash());
 var passport = require('passport')
@@ -107,10 +136,20 @@ passport.use(new LocalStrategy(
 
 app.use(passport.initialize());
 app.use(passport.session());
+//major change here
+
 
 //revalidate when back button is clicked 
 app.get("/logout", function (req, res) {
-  req.logout();
+//  req.logout();
+  //if(req.session){
+	req.session.auth = null;
+	
+	req.session.destroy();
+  //}
+  res.header('Cache-Control','no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+  res.header('Expires','Fri, 31 Dec 1998 12:00:00 GMT');
+
   res.redirect('/adminLogin');
 });
 
@@ -135,16 +174,16 @@ function requireLogin(req, res, next) {
   }
 }
 
-app.post('/login',
+app.post('/login',cas.bounce,
   passport.authenticate('local', {
     successRedirect: '/admin/adminView',
     session: true,
     failureRedirect: '/failedAuthentication',
     failureFlash: "Incorrect Username or Password"
-  }),
+  })
 );
 
-app.get('/failedAuthentication', function (req, res) {
+app.get('/failedAuthentication',cas.bounce, function (req, res) {
   
   
   req.session.save(function () {
@@ -154,21 +193,25 @@ app.get('/failedAuthentication', function (req, res) {
   });
   
 });
-app.get('/adminLogin', function (req, res) {
+app.get('/adminLogin',cas.bounce,  function (req, res) {
   res.render("adminLogin.ejs",{
     failed: false
   });
 })
 
 
-app.all("/admin/*", requireLogin, function (req, res, next) {
+app.all("/admin/*", cas.bounce, requireLogin, function (req, res, next) {
 
   next(); // if the middleware allowed us to get here,
   // just move on to the next route handler
 });
 // code for fetching all data from a mongo database
-app.get("/admin/adminView", function (req, res) {
-  mongoClient.connect(url, function (err, db) {
+app.get("/admin/adminView", cas.bounce, function (req, res) {
+  //adding new code here
+  if (req.user){
+
+  // till here
+  mongoClient.connect(url, {uri_decode_auth: true}, function (err, db) {
     if (err) throw err;
     var dbo = db.db("mcmsc");
     dbo.collection("students").find({}).toArray(function (err, result) {
@@ -183,12 +226,16 @@ app.get("/admin/adminView", function (req, res) {
       db.close();
     });
   });
-})
+  }
+  else{
+  res.redirect("/login");
+}
+});
 
 //director submission
-app.post("/admin/directorSubmission", function (req, res) {
+app.post("/admin/directorSubmission", cas.bounce, function (req, res) {
   console.log(req.body);
-  mongoClient.connect(url, function (err, db) {
+  mongoClient.connect(url, {uri_decode_auth: true}, function (err, db) {
     if (err) throw err;
     var dbo = db.db("mcmsc");
     var myquery = { idNumber: req.body.studentId };
@@ -208,7 +255,7 @@ app.post("/admin/directorSubmission", function (req, res) {
       console.log("1 document updated");
       res.redirect("/admin/adminView");
       var mailOptions = {
-        from: 'tharangd95@gmail.com',
+        from: 'AMLSS advising',
         to: email,
         subject: 'MCMSC form submission',
         text: msg
@@ -227,9 +274,9 @@ app.post("/admin/directorSubmission", function (req, res) {
 
 });
 // individual student data from adminView
-app.get("/admin/adminView/:idno", function (req, res) {
+app.get("/admin/adminView/:idno", cas.bounce, function (req, res) {
   var id = req.params.idno;
-  mongoClient.connect(url, function (err, db) {
+  mongoClient.connect(url, {uri_decode_auth: true}, function (err, db) {
     console.log("coming here");
     if (err) throw err;
     var dbo = db.db("mcmsc");
@@ -250,7 +297,7 @@ app.get("/admin/adminView/:idno", function (req, res) {
 // routes starting with `/admin`
 
 //Defining database schema
-app.post("/addData", function (req, res) {
+app.post("/addData", cas.bounce, function (req, res) {
   var id = req.body.idNumber;
   console.log(id);
   var myData = req.body;
@@ -268,7 +315,7 @@ app.post("/addData", function (req, res) {
         //res.send("Thank you for submitting this form! You may now close this window");
         res.render("submissionThanks.ejs");
         var mailOptions = {
-          from: 'tharangd95@gmail.com',
+          from: 'tdandala@asu.edu',
           to: email,
           subject: 'MCMSC form submission',
           text: 'Thank you for submitting the form!'
@@ -287,7 +334,7 @@ app.post("/addData", function (req, res) {
         var emailtext = req.body.firstName + " " + req.body.lastName + " has submitted the MCMSC progress form and has listed you as " + memberDetails[i].memberPosition + " of the advisory committee." + "\n ASU ID: " + req.body.idNumber + "\n" + "Asurite : " + req.body.asurite;  
         console.log(emailtext);
         var mailOptions = {
-          from: 'tharangd95@gmail.com',
+          from: 'tdandala@asu.edu',
           to : memberDetails[i].memberEmail,
           subject : 'MCMSC form submission',
           text : emailtext
@@ -303,7 +350,7 @@ app.post("/addData", function (req, res) {
         });
         }
       }) */
-  mongoClient.connect(url, function (err, db) {
+  mongoClient.connect(url, {uri_decode_auth: true}, function (err, db) {
     console.log("coming here");
     if (err) throw err;
     var dbo = db.db("mcmsc");
@@ -371,9 +418,9 @@ app.post("/addData", function (req, res) {
           //res.send("Thank you for submitting this form! You may now close this window");
           res.render("submissionThanks.ejs");
           var mailOptions = {
-            from: 'tharangd95@gmail.com',
+            from: 'tdandala@asu.edu',
             to: email,
-            subject: 'MCMSC form submission',
+            subject: 'AMLSS Student Report submission',
             text: 'Thank you for submitting the form!'
           };
           transporter.sendMail(mailOptions, function (error, info) {
@@ -391,9 +438,9 @@ app.post("/addData", function (req, res) {
               var emailtext = req.body.firstName + " " + req.body.lastName + " has submitted the MCMSC progress form and has listed you as " + memberDetails[i].memberPosition + " of the advisory committee." + "\n ASU ID: " + req.body.idNumber + "\n" + "Asurite : " + req.body.asurite;
               console.log(emailtext);
               var mailOptions = {
-                from: 'tharangd95@gmail.com',
+                from: 'tdandala@asu.edu',
                 to: memberDetails[i].memberEmail,
-                subject: 'MCMSC form submission',
+                subject: 'AMLSS Student Report submission',
                 text: emailtext
               };
               console.log("email id is :");
@@ -410,13 +457,51 @@ app.post("/addData", function (req, res) {
       });
   });
 });
-app.get("/form",function(req,res){
+//
+
+//
+app.get("/form",cas.bounce, function(req,res){
   res.render("form.ejs");
 });
-app.get("*", function (req, res) {
-  res.render("initial.ejs");
+
+app.get("*", cas.bounce, function (req, res) {
+  console.log("hits here");
+  res.render("initial.ejs");	
 });
 
-app.listen(3000, "localhost", function () {
+
+//changes here
+var fs = require('fs');
+var privateKey  = fs.readFileSync('/etc/apache2/sites-available/ssl-certs/mathesis.asu.edu.key', 'utf8');
+var certificate = fs.readFileSync('/etc/apache2/sites-available/ssl-certs/mathesis_asu_edu_cert.cer', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+//
+
+//
+/*var server = require('https').createServer(credentials, app);
+var io = require('socket.io').listen(server);
+
+server.listen(3000,"mathesis.asu.edu",function(){
   console.log("connected!");
 });
+
+*/
+
+var httpolyglot = require('httpolyglot');
+var server = httpolyglot.createServer(credentials,function(req,res) {
+      if (!req.socket.encrypted) {
+      // Redirect to https
+        res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+        res.end();
+      } else {
+        // The express app or any other compatible app 
+        app.apply(app,arguments);
+      }
+  });
+ // Some port
+ server.listen(3000);
+/*var http = require('http');
+var httpserver = http.createServer(app);
+httpserver.listen(3001,"mathesis.asu.edu",function(){
+    console.log("hello there");	
+});*/
