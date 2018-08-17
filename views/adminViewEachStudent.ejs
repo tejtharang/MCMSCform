@@ -2,11 +2,21 @@
 <title>Administrator View</title>
 
 <head>
-    <center>
+<!--     <center>
         <h1>
             <%= result[0].firstName %>
-                <%= result[0].lastName %>'s submission</h1>
-    </center>
+                <%= result[0].lastName %>'s Submission</h1>
+    </center> -->
+    <div class="container">
+    <div class="col-md-6" id="name-header">
+    <h1>
+        <%= result[0].firstName %>
+            <%= result[0].lastName %>'s Submission</h1>
+    </div>
+    <div id="print-btn" class="col-md-6">
+        <button id="cmd" class="btn-primary pull-right">Print</button>
+    </div>
+</div>
 </head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Latest compiled and minified CSS -->
@@ -34,6 +44,72 @@
     .pad {
         padding-top: 10px;
         padding-bottom: 10px;
+    }
+    #print-btn {
+        margin: 20px 0 20px 0;
+    }
+
+    @media print {
+        #name-header {
+            width: 100%;
+        }
+        .col-md-1,
+        .col-md-2,
+        .col-md-3,
+        .col-md-4,
+        .col-md-5,
+        .col-md-6,
+        .col-md-7,
+        .col-md-8,
+        .col-md-9,
+        .col-md-10,
+        .col-md-11,
+        .col-md-12 {
+            float: left;
+        }
+        .col-md-12 {
+            width: 100%;
+        }
+        .col-md-11 {
+            width: 91.66666667%;
+        }
+        .col-md-10 {
+            width: 83.33333333%;
+        }
+        .col-md-9 {
+            width: 75%;
+        }
+        .col-md-8 {
+            width: 66.66666667%;
+        }
+        .col-md-7 {
+            width: 58.33333333%;
+        }
+        .col-md-6 {
+            width: 50%;
+        }
+        .col-md-5 {
+            width: 41.66666667%;
+        }
+        .col-md-4 {
+            width: 33.33333333%;
+        }
+        .col-md-3 {
+            width: 25%;
+        }
+        .col-md-2 {
+            width: 16.66666667%;
+        }
+        .col-md-1 {
+            width: 8.33333333%;
+        }
+        form,
+        #print-btn {
+            display: none;
+        }
+        a[href]:after {
+            content: none !important;
+          }
     }
 </style>
 
@@ -202,10 +278,10 @@
 
                                             <hr>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <label class="control-label">Advisory Committee</label>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <% if(result[0].memberAddTableHiddenInput == ''){ %>
                                                         Not taken
                                                         <% } %>
@@ -214,12 +290,12 @@
                                                                 <% } %>
                                                 </div>
                                                 <% if(result[0].memberAddTableHiddenInput == ''){ %>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-8">
                                                         <div class="row">
                                                             <div class="col-md-4">
                                                                 <label class="control-label">Reason for not having an advisory committee</label>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-8">
                                                                 <%=  result[0].reasonAdvisoryCommittee %>
                                                             </div>
                                                         </div>
@@ -399,7 +475,11 @@
                                                                         <%= st[i].status %>
                                                                     </td>
                                                                     <td>
-                                                                        <%= st[i].url %>
+                                                                        <!-- <%= st[i].url %> -->
+                                                                        <%if (st[i].url.length > 0) { %>
+                                                                            <a href="<%= st[i].url %>" target=_blank>Link</a>
+                                                                        <% } %>
+                                                                        <!-- <a href="<%= st[i].url %>" target=_blank>Link</a> -->
                                                                     </td>
                                                                     <td>
                                                                         <%= st[i].doi %>
@@ -557,7 +637,7 @@
                     </label>
 
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-8">
                     <%= result[0].extraInfo %>
                 </div>
             </div>
@@ -614,6 +694,11 @@
     <br>
     <br>
     <br>
+    <script>
+        $('#cmd').click(function() {
+            window.print();
+        })
+    </script>
 
 </body>
 
